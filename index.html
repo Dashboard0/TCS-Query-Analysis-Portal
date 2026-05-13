@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Query Analysis Portal</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f172a;--bg2:#1e293b;--bg3:#0a1525;--border:#334155;--border2:#475569;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  --accent:#38bdf8;--accent2:#818cf8;--success:#10b981;--warn:#f59e0b;
+  --radius:10px;--radius-lg:14px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+.app{max-width:1100px;margin:0 auto;padding:2rem 1.5rem}
+.header{text-align:center;margin-bottom:2.5rem;padding:2rem 0 1rem}
+.header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:.5rem}
+.header p{color:var(--text2);font-size:.95rem}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem}
+.card-title{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;font-size:.72rem;font-weight:800;flex-shrink:0}
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--radius);padding:2.5rem 1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3)}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:#0c1e33}
+.upload-icon{font-size:2.8rem;margin-bottom:.75rem;display:block}
+.upload-zone strong{color:var(--text);font-size:1rem;display:block;margin-bottom:.3rem}
+.upload-zone p{color:var(--text2);font-size:.85rem}
+input[type=file]{display:none}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.2rem;border-radius:8px;border:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-ghost{background:var(--border);color:var(--text);border:1px solid var(--border2)}
+.btn-ghost:hover{background:#3d4e63}
+.btn-success{background:#059669;color:#fff}
+.btn-success:hover{background:#047857}
+.btn-row{display:flex;gap:.75rem;flex-wrap:wrap}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
+.stat-label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.stat-value{font-size:1.9rem;font-weight:800;margin-top:.15rem;line-height:1}
+.stat-sub{font-size:.72rem;color:var(--text3);margin-top:.3rem}
+.table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.82rem}
+th{background:var(--bg3);color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:.7rem 1rem;border-bottom:1px solid #1e293b;color:var(--text);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#1a2540}
+.badge{display:inline-block;padding:.2rem .65rem;border-radius:6px;font-size:.72rem;font-weight:700;white-space:nowrap}
+.b0{background:#1e3a5f;color:#7dd3fc}
+.b1{background:#2e1065;color:#c4b5fd}
+.b2{background:#064e3b;color:#6ee7b7}
+.b3{background:#451a03;color:#fcd34d}
+.b4{background:#450a0a;color:#fca5a5}
+.b5{background:#500724;color:#fbcfe8}
+.b6{background:#083344;color:#67e8f9}
+.b7{background:#1a2e05;color:#bef264}
+.progress{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:.4rem}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
+.bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.55rem}
+.bar-label{font-size:.78rem;color:var(--text2);width:140px;flex-shrink:0;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{flex:1;height:26px;background:var(--bg3);border-radius:5px;overflow:hidden}
+.bar-fill{height:100%;display:flex;align-items:center;padding-left:.5rem;font-size:.73rem;font-weight:700;color:#fff;border-radius:5px}
+.c0{background:linear-gradient(90deg,#0ea5e9,#38bdf8)}
+.c1{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.c2{background:linear-gradient(90deg,#059669,#34d399)}
+.c3{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.c4{background:linear-gradient(90deg,#db2777,#f472b6)}
+.c5{background:linear-gradient(90deg,#0891b2,#22d3ee)}
+.c6{background:linear-gradient(90deg,#65a30d,#bef264)}
+.c7{background:linear-gradient(90deg,#9333ea,#e879f9)}
+.tabs{display:flex;gap:.4rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.tab{padding:.55rem 1.1rem;border-radius:8px 8px 0 0;font-size:.85rem;font-weight:500;cursor:pointer;color:var(--text3);border:1px solid transparent;border-bottom:none;transition:all .15s;margin-bottom:-1px}
+.tab.active{background:var(--bg2);border-color:var(--border);color:var(--accent)}
+.tab:hover:not(.active){color:var(--text)}
+.detail-block{margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.detail-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.summary-text{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-size:.82rem;color:#cbd5e1;line-height:1.65;margin:.6rem 0}
+.file-chip{display:flex;align-items:center;gap:.75rem;padding:.7rem 1rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border);margin-top:.75rem}
+.loading{display:flex;align-items:center;gap:.75rem;color:var(--text2);font-size:.875rem;padding:1rem 0}
+.spin{width:20px;height:20px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.alert-warn{padding:.75rem 1rem;border-radius:8px;font-size:.85rem;margin-top:.75rem;background:#422006;border:1px solid #78350f;color:#fde68a}
+footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem;border-top:1px solid var(--border);margin-top:1rem}
+@media(max-width:600px){
+  .header h1{font-size:1.5rem}
+  .app{padding:1rem}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .bar-label{width:90px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <h1>Query Analysis Portal</h1>
+    <p>Upload ticket data &bull; Analyze query types &bull; Export consolidated report</p>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">1</span> Download Sample File</div>
+    <p style="color:var(--text2);font-size:.875rem;margin-bottom:1.1rem">
+      Download a sample file with all 18 required headers. Fill it with your data and upload below.
+    </p>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="downloadSampleCSV()">&#8659; Sample CSV</button>
+      <button class="btn btn-ghost" onclick="downloadSampleXLSX()">&#8659; Sample XLSX</button>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="card">
+    <div class="card-title"><span class="step-badge">2</span> Upload Your Data File</div>
+    <div id="uploadZone" class="upload-zone"
+         onclick="document.getElementById('fileIn').click()"
+         ondragover="onDrag(event,'over')"
+         ondragleave="onDrag(event,'leave')"
+         ondrop="onDrag(event,'drop')">
+      <span class="upload-icon">&#9729;</span>
+      <strong>Click to browse or drag &amp; drop</strong>
+      <p>Supports CSV and XLSX formats</p>
+    </div>
+    <input type="file" id="fileIn" accept=".csv,.xlsx,.xls" onchange="handleFile(event)"/>
+    <div id="fileChip"></div>
+    <div id="loadingArea"></div>
+    <div id="alertArea"></div>
+  </div>
+
+  <!-- Results -->
+  <div id="results" style="display:none">
+
+    <div id="statsGrid" class="stats-grid"></div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showTab('summary',this)">Summary Table</div>
+      <div class="tab" onclick="showTab('chart',this)">Visual Chart</div>
+      <div class="tab" onclick="showTab('detail',this)">Detailed View</div>
+    </div>
+
+    <div id="tab-summary" class="card">
+      <div class="card-title">Query Type Summary</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th><th>Query Type</th><th>Count</th><th>% Share</th>
+              <th>Open</th><th>Closed</th><th>Avg Age</th><th>Consolidated Summary</th>
+            </tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-chart" class="card" style="display:none">
+      <div class="card-title">Query Distribution</div>
+      <div id="chartArea" style="padding:.5rem 0"></div>
+    </div>
+
+    <div id="tab-detail" class="card" style="display:none">
+      <div class="card-title">Detailed Breakdown</div>
+      <div id="detailArea"></div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="card">
+      <div class="card-title"><span class="step-badge">3</span> Export Analysis</div>
+      <p style="color:var(--text2);font-size:.875rem;margin-bottom:1.1rem">
+        Download the complete analysis with all query type summaries, counts, and consolidated statements.
+      </p>
+      <div class="btn-row">
+        <button class="btn btn-success" onclick="exportXLSX()">&#8659; Download XLSX</button>
+        <button class="btn btn-ghost" onclick="exportCSV()">&#8659; Download CSV</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>Query Analysis Portal &mdash; Single HTML file &bull; No server required</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+var HEADERS = [
+  'Received Date','Ticket ID','Campaign Name','Candidate Name','Email ID',
+  'Mobile No','Registration No','Query Type','Query Statement','PM Response',
+  'Status','Response Date','Age','Scale','Reopen Query','Reopen PM Response',
+  'Reopen Query 2','Reopen PM Response 2'
+];
+
+var SAMPLE = [
+  HEADERS,
+  ['2024-01-15','TKT-001','Campaign Alpha','John Smith','john@email.com','9876543210','REG001','Billing Issue','Unable to process payment for registration','Payment gateway issue resolved','Closed','2024-01-16',1,'High','','','',''],
+  ['2024-01-15','TKT-002','Campaign Alpha','Jane Doe','jane@email.com','9876543211','REG002','Technical Issue','Login page not loading on mobile','Server cache cleared','Closed','2024-01-17',2,'Medium','App still crashing','Reset app cache','',''],
+  ['2024-01-16','TKT-003','Campaign Beta','Mike Johnson','mike@email.com','9876543212','REG003','Enrollment Query','How to enroll in the advanced module?','Please visit the enrollment portal','Open','','','Medium','','','',''],
+  ['2024-01-16','TKT-004','Campaign Beta','Sarah Lee','sarah@email.com','9876543213','REG004','Billing Issue','Duplicate payment deducted','Refund initiated','Open','','','High','','','',''],
+  ['2024-01-17','TKT-005','Campaign Alpha','Raj Kumar','raj@email.com','9876543214','REG005','Technical Issue','Certificate not downloading','PDF server fixed','Closed','2024-01-18',1,'Low','','','',''],
+  ['2024-01-17','TKT-006','Campaign Gamma','Priya Mehta','priya@email.com','9876543215','REG006','Enrollment Query','Can I change my batch timing?','Batch change allowed once','Closed','2024-01-19',2,'Medium','','','',''],
+  ['2024-01-18','TKT-007','Campaign Gamma','Ali Khan','ali@email.com','9876543216','REG007','Document Request','Need enrollment certificate copy','Certificate emailed','Closed','2024-01-19',1,'Low','','','',''],
+  ['2024-01-18','TKT-008','Campaign Alpha','Chen Wei','chen@email.com','9876543217','REG008','Billing Issue','GST invoice not received','Invoice resent to email','Closed','2024-01-20',2,'Medium','','','',''],
+  ['2024-01-19','TKT-009','Campaign Beta','Fatima Shaikh','fatima@email.com','9876543218','REG009','Technical Issue','Video lectures buffering issue','CDN settings optimised','Open','','','High','Still buffering','Escalated to tech team','',''],
+  ['2024-01-20','TKT-010','Campaign Gamma','Tom Brown','tom@email.com','9876543219','REG010','General Enquiry','What are the exam dates?','Exam schedule shared','Closed','2024-01-21',1,'Low','','','','']
+];
+
+var BADGE_CLS = ['b0','b1','b2','b3','b4','b5','b6','b7'];
+var BAR_CLS   = ['c0','c1','c2','c3','c4','c5','c6','c7'];
+
+var rows = [];
+var analysis = [];
+
+function onDrag(e, type) {
+  e.preventDefault();
+  var z = document.getElementById('uploadZone');
+  if (type === 'over')  { z.classList.add('drag'); }
+  if (type === 'leave') { z.classList.remove('drag'); }
+  if (type === 'drop')  {
+    z.classList.remove('drag');
+    var f = e.dataTransfer.files[0];
+    if (f) processFile(f);
+  }
+}
+
+function handleFile(e) {
+  var f = e.target.files[0];
+  if (f) processFile(f);
+}
+
+function processFile(file) {
+  var ext = file.name.split('.').pop().toLowerCase();
+
+  document.getElementById('fileChip').innerHTML =
+    '<div class="file-chip">' +
+    '<span style="font-size:1.4rem">&#128196;</span>' +
+    '<div><div style="font-size:.875rem;font-weight:600">' + esc(file.name) + '</div>' +
+    '<div style="font-size:.73rem;color:var(--text3)">' + (file.size / 1024).toFixed(1) + ' KB</div></div></div>';
+
+  document.getElementById('loadingArea').innerHTML =
+    '<div class="loading"><div class="spin"></div> Parsing file&hellip;</div>';
+  document.getElementById('alertArea').innerHTML = '';
+  document.getElementById('results').style.display = 'none';
+
+  var reader = new FileReader();
+
+  if (ext === 'csv') {
+    reader.onload = function (ev) {
+      var result = Papa.parse(ev.target.result, {
+        header: true,
+        skipEmptyLines: true,
+        transformHeader: function (h) { return h.trim(); }
+      });
+      rows = result.data;
+      setTimeout(analyze, 300);
+    };
+    reader.readAsText(file);
+  } else {
+    reader.onload = function (ev) {
+      var wb  = XLSX.read(ev.target.result, { type: 'binary' });
+      var ws  = wb.Sheets[wb.SheetNames[0]];
+      var raw = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      rows = raw.map(function (r) {
+        var o = {};
+        Object.keys(r).forEach(function (k) { o[k.trim()] = r[k]; });
+        return o;
+      });
+      setTimeout(analyze, 300);
+    };
+    reader.readAsBinaryString(file);
+  }
+}
+
+function getCol(row, name) {
+  var key = Object.keys(row).find(function (k) {
+    return k.toLowerCase() === name.toLowerCase();
+  });
+  return key ? String(row[key] || '').trim() : '';
+}
+
+function analyze() {
+  document.getElementById('loadingArea').innerHTML = '';
+
+  if (!rows || rows.length === 0) {
+    document.getElementById('alertArea').innerHTML =
+      '<div class="alert-warn">&#9888; No data rows found. Please check the file format and column headers.</div>';
+    return;
+  }
+
+  var groups = {};
+  rows.forEach(function (r) {
+    var qt = getCol(r, 'Query Type') || 'Unclassified';
+    if (!groups[qt]) {
+      groups[qt] = { count: 0, open: 0, closed: 0, ages: [], stmts: [] };
+    }
+    groups[qt].count++;
+    var st = getCol(r, 'Status').toLowerCase();
+    if (st === 'open') { groups[qt].open++; }
+    else if (st === 'closed' || st === 'resolved') { groups[qt].closed++; }
+    var age = parseFloat(getCol(r, 'Age'));
+    if (!isNaN(age)) { groups[qt].ages.push(age); }
+    var stmt = getCol(r, 'Query Statement');
+    if (stmt) { groups[qt].stmts.push(stmt); }
+  });
+
+  var total = rows.length;
+
+  analysis = Object.keys(groups)
+    .sort(function (a, b) { return groups[b].count - groups[a].count; })
+    .map(function (qt, i) {
+      var d = groups[qt];
+      var avgAge = d.ages.length
+        ? (d.ages.reduce(function (a, b) { return a + b; }, 0) / d.ages.length).toFixed(1)
+        : '-';
+      var uniq = d.stmts.filter(function (v, idx, arr) { return arr.indexOf(v) === idx; });
+      var pct  = ((d.count / total) * 100).toFixed(1);
+      return {
+        qt: qt,
+        count: d.count,
+        pct: pct,
+        open: d.open,
+        closed: d.closed,
+        avgAge: avgAge,
+        summary: makeSummary(qt, uniq, d.count, d.open),
+        stmts: uniq
+      };
+    });
+
+  var totalOpen   = analysis.reduce(function (a, b) { return a + b.open;   }, 0);
+  var totalClosed = analysis.reduce(function (a, b) { return a + b.closed; }, 0);
+  var topQt = analysis[0] || { qt: '-', count: 0 };
+
+  /* Stats */
+  document.getElementById('statsGrid').innerHTML =
+    mkStat('Total Tickets',  total,        'var(--accent)',  'all query types') +
+    mkStat('Query Types',    analysis.length, 'var(--accent2)','unique categories') +
+    mkStat('Open',           totalOpen,    'var(--warn)',    'awaiting resolution') +
+    mkStat('Closed',         totalClosed,  'var(--success)', 'resolved tickets') +
+    mkStat('Top Category',   topQt.qt,     'var(--text)',    topQt.count + ' tickets', true);
+
+  /* Summary table */
+  document.getElementById('summaryBody').innerHTML = analysis.map(function (r, i) {
+    return '<tr>' +
+      '<td style="color:var(--text3)">' + (i + 1) + '</td>' +
+      '<td><span class="badge ' + BADGE_CLS[i % 8] + '">' + esc(r.qt) + '</span></td>' +
+      '<td style="font-weight:800;color:var(--accent)">' + r.count + '</td>' +
+      '<td><span>' + r.pct + '%</span>' +
+        '<div class="progress"><div class="progress-fill" style="width:' + r.pct + '%"></div></div></td>' +
+      '<td style="color:var(--warn)">' + r.open + '</td>' +
+      '<td style="color:var(--success)">' + r.closed + '</td>' +
+      '<td>' + r.avgAge + '</td>' +
+      '<td style="font-size:.78rem;color:var(--text2);max-width:240px;line-height:1.5">' + esc(r.summary) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  /* Chart */
+  var maxCount = analysis[0] ? analysis[0].count : 1;
+  document.getElementById('chartArea').innerHTML = analysis.map(function (r, i) {
+    var w = (r.count / maxCount * 100).toFixed(1);
+    return '<div class="bar-row">' +
+      '<div class="bar-label" title="' + esc(r.qt) + '">' + esc(r.qt) + '</div>' +
+      '<div class="bar-track">' +
+        '<div class="bar-fill ' + BAR_CLS[i % 8] + '" style="width:' + w + '%;min-width:' + (r.count > 0 ? '28px' : '0') + '">' + r.count + '</div>' +
+      '</div>' +
+      '<div style="font-size:.73rem;color:var(--text3);min-width:38px;text-align:right">' + r.pct + '%</div>' +
+      '</div>';
+  }).join('');
+
+  /* Detail */
+  document.getElementById('detailArea').innerHTML = analysis.map(function (r, i) {
+    var samples = r.stmts.slice(0, 3).map(function (s) {
+      return '<em>&ldquo;' + esc(s.substring(0, 80) + (s.length > 80 ? '&hellip;' : '')) + '&rdquo;</em>';
+    }).join(' &bull; ');
+
+    return '<div class="detail-block">' +
+      '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem">' +
+        '<span class="badge ' + BADGE_CLS[i % 8] + '" style="font-size:.82rem;padding:.3rem .85rem">' + esc(r.qt) + '</span>' +
+        '<strong style="color:var(--accent)">' + r.count + ' tickets</strong>' +
+        '<span style="color:var(--text3);font-size:.8rem">' + r.pct + '%</span>' +
+        '<span style="margin-left:auto;font-size:.78rem;color:var(--text3)">Open: <span style="color:var(--warn)">' + r.open + '</span> &bull; Closed: <span style="color:var(--success)">' + r.closed + '</span> &bull; Avg Age: ' + r.avgAge + '</span>' +
+      '</div>' +
+      '<div class="summary-text"><strong style="color:var(--accent)">Consolidated Summary:</strong> ' + esc(r.summary) + '</div>' +
+      (r.stmts.length ? '<div style="font-size:.75rem;color:var(--text3);line-height:1.7">Sample queries: ' + samples + '</div>' : '') +
+      '</div>';
+  }).join('');
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function mkStat(label, value, color, sub, small) {
+  var fontSize = small ? 'font-size:.95rem;padding-top:.4rem;' : '';
+  return '<div class="stat-card">' +
+    '<div class="stat-label">' + label + '</div>' +
+    '<div class="stat-value" style="' + fontSize + 'color:' + color + '">' + esc(String(value)) + '</div>' +
+    '<div class="stat-sub">' + sub + '</div>' +
+    '</div>';
+}
+
+function makeSummary(qt, stmts, count, open) {
+  if (!stmts.length) {
+    return count + ' ticket(s) recorded under "' + qt + '" with no query statements provided.';
+  }
+  var stop = { 'the':1,'and':1,'for':1,'not':1,'with':1,'this':1,'that':1,'have':1,
+               'from':1,'are':1,'was':1,'please':1,'how':1,'what':1,'when':1,
+               'unable':1,'need':1,'get':1,'can':1,'you':1,'your':1,'our':1 };
+  var freq = {};
+  stmts.forEach(function (s) {
+    s.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).forEach(function (w) {
+      if (w.length > 3 && !stop[w]) { freq[w] = (freq[w] || 0) + 1; }
+    });
+  });
+  var top = Object.keys(freq)
+    .sort(function (a, b) { return freq[b] - freq[a]; })
+    .slice(0, 4).join(', ');
+  var sample = stmts.slice(0, 2).map(function (s) {
+    return s.substring(0, 70) + (s.length > 70 ? '...' : '');
+  }).join('; ');
+  var openNote = open > 0 ? ' ' + open + ' ticket(s) still open.' : '';
+  return count + ' ticket(s) under "' + qt + '". Key themes: ' + (top || 'varied') + '. Sample: ' + sample + '.' + openNote;
+}
+
+function showTab(name, el) {
+  document.querySelectorAll('.tab').forEach(function (t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  ['summary', 'chart', 'detail'].forEach(function (t) {
+    document.getElementById('tab-' + t).style.display = (t === name) ? 'block' : 'none';
+  });
+}
+
+function downloadSampleCSV() {
+  var csv = SAMPLE.map(function (r) {
+    return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  triggerDL(new Blob([csv], { type: 'text/csv' }), 'sample_query_data.csv');
+}
+
+function downloadSampleXLSX() {
+  var wb = XLSX.utils.book_new();
+  var ws = XLSX.utils.aoa_to_sheet(SAMPLE);
+  ws['!cols'] = HEADERS.map(function () { return { wch: 22 }; });
+  XLSX.utils.book_append_sheet(wb, ws, 'Query Data');
+  XLSX.writeFile(wb, 'sample_query_data.xlsx');
+}
+
+function exportXLSX() {
+  if (!analysis.length) return;
+  var wb = XLSX.utils.book_new();
+  var summaryData = [['#','Query Type','Count','% Share','Open','Closed','Avg Age (days)','Consolidated Summary']];
+  analysis.forEach(function (r, i) {
+    summaryData.push([i + 1, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary]);
+  });
+  var ws1 = XLSX.utils.aoa_to_sheet(summaryData);
+  ws1['!cols'] = [{ wch:4 },{ wch:22 },{ wch:8 },{ wch:9 },{ wch:8 },{ wch:8 },{ wch:14 },{ wch:80 }];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Query Summary');
+  if (rows.length) {
+    var keys     = Object.keys(rows[0]);
+    var rawData  = [keys].concat(rows.map(function (r) { return keys.map(function (k) { return r[k] || ''; }); }));
+    var ws2      = XLSX.utils.aoa_to_sheet(rawData);
+    XLSX.utils.book_append_sheet(wb, ws2, 'Raw Data');
+  }
+  XLSX.writeFile(wb, 'query_analysis_report.xlsx');
+}
+
+function exportCSV() {
+  if (!analysis.length) return;
+  var data = [['#','Query Type','Count','% Share','Open','Closed','Avg Age','Consolidated Summary']].concat(
+    analysis.map(function (r, i) {
+      return [i + 1, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary];
+    })
+  );
+  var csv = data.map(function (row) {
+    return row.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  triggerDL(new Blob([csv], { type: 'text/csv' }), 'query_analysis_report.csv');
+}
+
+function triggerDL(blob, name) {
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+</script>
+</body>
+</html>
