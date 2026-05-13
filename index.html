@@ -142,7 +142,7 @@ footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem
         <table>
           <thead>
             <tr>
-              <th>#</th><th>Query Type</th><th>Count</th><th>% Share</th>
+              <th>#</th><th>Campaign Name</th><th>Query Type</th><th>Count</th><th>% Share</th>
               <th>Open</th><th>Closed</th><th>Avg Age</th><th>Consolidated Summary</th>
             </tr>
           </thead>
@@ -288,7 +288,7 @@ function analyze() {
   rows.forEach(function (r) {
     var qt = getCol(r, 'Query Type') || 'Unclassified';
     if (!groups[qt]) {
-      groups[qt] = { count: 0, open: 0, closed: 0, ages: [], stmts: [] };
+      groups[qt] = { count: 0, open: 0, closed: 0, ages: [], stmts: [], campaigns: [] };
     }
     groups[qt].count++;
     var st = getCol(r, 'Status').toLowerCase();
@@ -298,6 +298,8 @@ function analyze() {
     if (!isNaN(age)) { groups[qt].ages.push(age); }
     var stmt = getCol(r, 'Query Statement');
     if (stmt) { groups[qt].stmts.push(stmt); }
+    var camp = getCol(r, 'Campaign Name');
+    if (camp && groups[qt].campaigns.indexOf(camp) === -1) { groups[qt].campaigns.push(camp); }
   });
 
   var total = rows.length;
@@ -319,6 +321,7 @@ function analyze() {
         closed: d.closed,
         avgAge: avgAge,
         summary: makeSummary(qt, uniq, d.count, d.open),
+        campaigns: d.campaigns.join(', ') || '-',
         stmts: uniq
       };
     });
@@ -339,6 +342,7 @@ function analyze() {
   document.getElementById('summaryBody').innerHTML = analysis.map(function (r, i) {
     return '<tr>' +
       '<td style="color:var(--text3)">' + (i + 1) + '</td>' +
+      '<td style="font-size:.78rem;color:var(--text2)">' + esc(r.campaigns) + '</td>' +
       '<td><span class="badge ' + BADGE_CLS[i % 8] + '">' + esc(r.qt) + '</span></td>' +
       '<td style="font-weight:800;color:var(--accent)">' + r.count + '</td>' +
       '<td><span>' + r.pct + '%</span>' +
@@ -355,7 +359,7 @@ function analyze() {
   document.getElementById('chartArea').innerHTML = analysis.map(function (r, i) {
     var w = (r.count / maxCount * 100).toFixed(1);
     return '<div class="bar-row">' +
-      '<div class="bar-label" title="' + esc(r.qt) + '">' + esc(r.qt) + '</div>' +
+      '<div class="bar-label" title="' + esc(r.campaigns + ' | ' + r.qt) + '">' + esc(r.qt) + '<div style="font-size:.65rem;color:var(--text3);margin-top:1px">' + esc(r.campaigns) + '</div></div>' +
       '<div class="bar-track">' +
         '<div class="bar-fill ' + BAR_CLS[i % 8] + '" style="width:' + w + '%;min-width:' + (r.count > 0 ? '28px' : '0') + '">' + r.count + '</div>' +
       '</div>' +
@@ -371,6 +375,7 @@ function analyze() {
 
     return '<div class="detail-block">' +
       '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem">' +
+        '<span style="font-size:.75rem;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.2rem .6rem">' + esc(r.campaigns) + '</span>' +
         '<span class="badge ' + BADGE_CLS[i % 8] + '" style="font-size:.82rem;padding:.3rem .85rem">' + esc(r.qt) + '</span>' +
         '<strong style="color:var(--accent)">' + r.count + ' tickets</strong>' +
         '<span style="color:var(--text3);font-size:.8rem">' + r.pct + '%</span>' +
@@ -395,26 +400,56 @@ function mkStat(label, value, color, sub, small) {
 }
 
 function makeSummary(qt, stmts, count, open) {
+  var closed = count - open;
+  var statusNote = open === 0
+    ? 'All ' + count + ' ticket(s) have been resolved.'
+    : closed > 0
+      ? closed + ' ticket(s) resolved, ' + open + ' still pending resolution.'
+      : 'All ' + count + ' ticket(s) are currently open and pending resolution.';
+
   if (!stmts.length) {
-    return count + ' ticket(s) recorded under "' + qt + '" with no query statements provided.';
+    return 'A total of ' + count + ' ticket(s) were raised under "' + qt + '". ' + statusNote;
   }
-  var stop = { 'the':1,'and':1,'for':1,'not':1,'with':1,'this':1,'that':1,'have':1,
-               'from':1,'are':1,'was':1,'please':1,'how':1,'what':1,'when':1,
-               'unable':1,'need':1,'get':1,'can':1,'you':1,'your':1,'our':1 };
-  var freq = {};
-  stmts.forEach(function (s) {
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).forEach(function (w) {
-      if (w.length > 3 && !stop[w]) { freq[w] = (freq[w] || 0) + 1; }
-    });
+
+  // Deduplicate and clean statements
+  var cleaned = stmts.map(function (s) { return s.trim(); })
+    .filter(function (s) { return s.length > 0; });
+
+  // Group similar issues by finding recurring sub-phrases (2+ word combos)
+  var phraseFreq = {};
+  cleaned.forEach(function (s) {
+    var words = s.toLowerCase().replace(/[^a-z0-9\s]/g, '').split(/\s+/).filter(function(w){ return w.length > 2; });
+    for (var i = 0; i < words.length - 1; i++) {
+      var phrase = words[i] + ' ' + words[i + 1];
+      phraseFreq[phrase] = (phraseFreq[phrase] || 0) + 1;
+    }
   });
-  var top = Object.keys(freq)
-    .sort(function (a, b) { return freq[b] - freq[a]; })
-    .slice(0, 4).join(', ');
-  var sample = stmts.slice(0, 2).map(function (s) {
-    return s.substring(0, 70) + (s.length > 70 ? '...' : '');
-  }).join('; ');
-  var openNote = open > 0 ? ' ' + open + ' ticket(s) still open.' : '';
-  return count + ' ticket(s) under "' + qt + '". Key themes: ' + (top || 'varied') + '. Sample: ' + sample + '.' + openNote;
+
+  // Pick top recurring phrases (appeared in more than 1 ticket or if only 1 ticket pick the statement itself)
+  var topPhrases = Object.keys(phraseFreq)
+    .filter(function (p) { return phraseFreq[p] > 1; })
+    .sort(function (a, b) { return phraseFreq[b] - phraseFreq[a]; })
+    .slice(0, 3);
+
+  var issueSummary = '';
+
+  if (cleaned.length === 1) {
+    // Single ticket — use full statement
+    issueSummary = cleaned[0];
+  } else if (topPhrases.length > 0) {
+    // Multiple tickets with recurring issues — describe the pattern
+    issueSummary = 'Candidates reported issues related to ' + topPhrases.join(', ') +
+      ', among other ' + qt.toLowerCase() + '-related concerns';
+  } else {
+    // Varied issues — list up to 3 concise distinct ones
+    var picks = cleaned.slice(0, 3).map(function (s) {
+      return s.charAt(0).toLowerCase() + s.slice(1).replace(/[.?!]+$/, '');
+    });
+    issueSummary = 'Issues raised include: ' + picks.join('; ');
+  }
+
+  return 'A total of ' + count + ' ticket(s) were raised under "' + qt + '". ' +
+    issueSummary + '. ' + statusNote;
 }
 
 function showTab(name, el) {
@@ -443,12 +478,12 @@ function downloadSampleXLSX() {
 function exportXLSX() {
   if (!analysis.length) return;
   var wb = XLSX.utils.book_new();
-  var summaryData = [['#','Query Type','Count','% Share','Open','Closed','Avg Age (days)','Consolidated Summary']];
+  var summaryData = [['#','Campaign Name','Query Type','Count','% Share','Open','Closed','Avg Age (days)','Consolidated Summary']];
   analysis.forEach(function (r, i) {
-    summaryData.push([i + 1, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary]);
+    summaryData.push([i + 1, r.campaigns, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary]);
   });
   var ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-  ws1['!cols'] = [{ wch:4 },{ wch:22 },{ wch:8 },{ wch:9 },{ wch:8 },{ wch:8 },{ wch:14 },{ wch:80 }];
+  ws1['!cols'] = [{ wch:4 },{ wch:22 },{ wch:22 },{ wch:8 },{ wch:9 },{ wch:8 },{ wch:8 },{ wch:14 },{ wch:80 }];
   XLSX.utils.book_append_sheet(wb, ws1, 'Query Summary');
   if (rows.length) {
     var keys     = Object.keys(rows[0]);
@@ -461,9 +496,9 @@ function exportXLSX() {
 
 function exportCSV() {
   if (!analysis.length) return;
-  var data = [['#','Query Type','Count','% Share','Open','Closed','Avg Age','Consolidated Summary']].concat(
+  var data = [['#','Campaign Name','Query Type','Count','% Share','Open','Closed','Avg Age','Consolidated Summary']].concat(
     analysis.map(function (r, i) {
-      return [i + 1, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary];
+      return [i + 1, r.campaigns, r.qt, r.count, r.pct + '%', r.open, r.closed, r.avgAge, r.summary];
     })
   );
   var csv = data.map(function (row) {
