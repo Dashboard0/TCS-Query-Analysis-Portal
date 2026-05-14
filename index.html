@@ -13,16 +13,16 @@
   --radius:10px;--radius-lg:14px;
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
-.app{max-width:1140px;margin:0 auto;padding:2rem 1.5rem}
-.header{text-align:center;margin-bottom:2.5rem;padding:2rem 0 1rem}
-.header h1{font-size:2.2rem;font-weight:800;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:.5rem}
-.header p{color:var(--text2);font-size:.95rem}
+.app{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+.header{text-align:center;margin-bottom:2.5rem;padding:1.5rem 0 .5rem}
+.header h1{font-size:2.1rem;font-weight:800;background:linear-gradient(135deg,#38bdf8,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:.4rem}
+.header p{color:var(--text2);font-size:.9rem}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;margin-bottom:1.5rem}
 .card-title{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:1rem;display:flex;align-items:center;gap:.6rem}
 .step-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;font-size:.72rem;font-weight:800;flex-shrink:0}
 
-/* Upload zone */
-.upload-zone{border:2px dashed var(--border2);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3);position:relative}
+/* Upload */
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--radius);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3)}
 .upload-zone:hover,.upload-zone.drag{border-color:var(--accent);background:#0c1e33}
 .upload-icon{font-size:2.5rem;margin-bottom:.6rem;display:block}
 .upload-zone strong{color:var(--text);font-size:1rem;display:block;margin-bottom:.25rem}
@@ -30,108 +30,103 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 input[type=file]{display:none}
 
 /* File queue */
-.file-queue{margin-top:1rem;display:flex;flex-direction:column;gap:.5rem}
-.file-item{display:flex;align-items:center;gap:.75rem;padding:.65rem 1rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border);transition:all .2s}
+.file-queue{margin-top:.9rem;display:flex;flex-direction:column;gap:.45rem}
+.file-item{display:flex;align-items:center;gap:.7rem;padding:.6rem .9rem;background:var(--bg3);border-radius:8px;border:1px solid var(--border)}
 .file-item.done{border-color:#064e3b}
 .file-item.error{border-color:#450a0a}
-.file-icon{font-size:1.2rem;flex-shrink:0}
-.file-name{font-size:.82rem;font-weight:600;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.file-size{font-size:.72rem;color:var(--text3);white-space:nowrap}
-.file-status{font-size:.72rem;font-weight:600;white-space:nowrap}
-.file-status.pending{color:var(--text3)}
-.file-status.parsing{color:var(--warn)}
-.file-status.done{color:var(--success)}
-.file-status.error{color:#f87171}
-.file-rows{font-size:.72rem;color:var(--text3);white-space:nowrap}
-.file-remove{background:none;border:none;color:var(--text3);cursor:pointer;font-size:1rem;padding:2px 4px;border-radius:4px;transition:color .15s;flex-shrink:0}
-.file-remove:hover{color:#f87171}
-.mini-spin{width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--warn);border-radius:50%;animation:spin .7s linear infinite;display:inline-block}
+.fi-name{font-size:.82rem;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi-size{font-size:.72rem;color:var(--text3);white-space:nowrap}
+.fi-status{font-size:.72rem;font-weight:600;white-space:nowrap}
+.fi-status.done{color:var(--success)}
+.fi-status.error{color:#f87171}
+.fi-status.parsing{color:var(--warn)}
+.fi-status.pending{color:var(--text3)}
+.fi-rm{background:none;border:none;color:var(--text3);cursor:pointer;font-size:.95rem;padding:2px 5px;border-radius:4px}
+.fi-rm:hover{color:#f87171}
+.mini-spin{width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--warn);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle}
 
 /* Merge banner */
-.merge-banner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding:.85rem 1.1rem;background:linear-gradient(135deg,#0c2040,#1a1040);border:1px solid #334155;border-radius:var(--radius);margin-top:1rem}
+.merge-banner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;padding:.8rem 1rem;background:#0c1f35;border:1px solid #1e3a5f;border-radius:var(--radius);margin-top:.85rem}
 .merge-info{font-size:.85rem;color:var(--text2)}
 .merge-info strong{color:var(--accent)}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem 1.2rem;border-radius:8px;border:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem 1.1rem;border-radius:8px;border:none;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s}
 .btn-primary{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff}
 .btn-primary:hover{opacity:.88;transform:translateY(-1px)}
 .btn-ghost{background:var(--border);color:var(--text);border:1px solid var(--border2)}
 .btn-ghost:hover{background:#3d4e63}
 .btn-success{background:#059669;color:#fff}
 .btn-success:hover{background:#047857}
-.btn-danger-sm{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d;font-size:.75rem;padding:.3rem .7rem}
-.btn-danger-sm:hover{background:#7f1d1d}
-.btn-row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+.btn-sm-danger{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d;font-size:.75rem;padding:.3rem .7rem}
+.btn-row{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
 
 /* Stats */
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:1.5rem}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.1rem}
-.stat-label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
-.stat-value{font-size:1.9rem;font-weight:800;margin-top:.15rem;line-height:1}
-.stat-sub{font-size:.72rem;color:var(--text3);margin-top:.3rem}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:1rem;margin-bottom:1.5rem}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1rem}
+.stat-label{font-size:.7rem;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+.stat-value{font-size:1.8rem;font-weight:800;margin-top:.15rem;line-height:1.1}
+.stat-sub{font-size:.7rem;color:var(--text3);margin-top:.25rem}
 
-/* Source files summary */
-.source-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
-.source-chip{font-size:.72rem;background:#0f2035;border:1px solid #1e3a5f;color:#7dd3fc;border-radius:5px;padding:.15rem .55rem;white-space:nowrap}
+/* Source chips */
+.source-chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+.chip{font-size:.7rem;background:#0f2035;border:1px solid #1e3a5f;color:#7dd3fc;border-radius:4px;padding:.12rem .5rem;white-space:nowrap}
+.chip-sq{font-size:.7rem;background:#1a1040;border:1px solid #2e1065;color:#c4b5fd;border-radius:4px;padding:.12rem .5rem;white-space:nowrap}
+.chip-match{font-size:.7rem;border-radius:4px;padding:.12rem .5rem;white-space:nowrap}
+.match-high{background:#064e3b;border:1px solid #065f46;color:#6ee7b7}
+.match-med{background:#451a03;border:1px solid #78350f;color:#fcd34d}
+.match-low{background:#1e293b;border:1px solid #334155;color:#94a3b8}
 
 /* Table */
 .table-wrap{overflow-x:auto;border-radius:8px;border:1px solid var(--border)}
-table{width:100%;border-collapse:collapse;font-size:.82rem}
-th{background:var(--bg3);color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;padding:.75rem 1rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
-td{padding:.7rem 1rem;border-bottom:1px solid #1e293b;color:var(--text);vertical-align:top}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{background:var(--bg3);color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.68rem;padding:.7rem .9rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:.65rem .9rem;border-bottom:1px solid #1a2540;color:var(--text);vertical-align:top}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#1a2540}
-.badge{display:inline-block;padding:.2rem .65rem;border-radius:6px;font-size:.72rem;font-weight:700;white-space:nowrap}
-.b0{background:#1e3a5f;color:#7dd3fc}
-.b1{background:#2e1065;color:#c4b5fd}
-.b2{background:#064e3b;color:#6ee7b7}
-.b3{background:#451a03;color:#fcd34d}
-.b4{background:#450a0a;color:#fca5a5}
-.b5{background:#500724;color:#fbcfe8}
-.b6{background:#083344;color:#67e8f9}
-.b7{background:#1a2e05;color:#bef264}
-.progress{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:.4rem}
+.badge{display:inline-block;padding:.18rem .6rem;border-radius:5px;font-size:.7rem;font-weight:700;white-space:nowrap}
+.b0{background:#1e3a5f;color:#7dd3fc}.b1{background:#2e1065;color:#c4b5fd}
+.b2{background:#064e3b;color:#6ee7b7}.b3{background:#451a03;color:#fcd34d}
+.b4{background:#450a0a;color:#fca5a5}.b5{background:#500724;color:#fbcfe8}
+.b6{background:#083344;color:#67e8f9}.b7{background:#1a2e05;color:#bef264}
+.b8{background:#1c1917;color:#d6d3d1}.b9{background:#0c1a0c;color:#86efac}
+.progress{height:4px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:.35rem}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px}
 
 /* Chart */
-.bar-row{display:flex;align-items:center;gap:.75rem;margin-bottom:.55rem}
-.bar-label{font-size:.75rem;color:var(--text2);width:150px;flex-shrink:0;text-align:right;overflow:hidden;line-height:1.3}
-.bar-track{flex:1;height:26px;background:var(--bg3);border-radius:5px;overflow:hidden}
-.bar-fill{height:100%;display:flex;align-items:center;padding-left:.5rem;font-size:.73rem;font-weight:700;color:#fff;border-radius:5px}
-.c0{background:linear-gradient(90deg,#0ea5e9,#38bdf8)}
-.c1{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
-.c2{background:linear-gradient(90deg,#059669,#34d399)}
-.c3{background:linear-gradient(90deg,#d97706,#fbbf24)}
-.c4{background:linear-gradient(90deg,#db2777,#f472b6)}
-.c5{background:linear-gradient(90deg,#0891b2,#22d3ee)}
-.c6{background:linear-gradient(90deg,#65a30d,#bef264)}
-.c7{background:linear-gradient(90deg,#9333ea,#e879f9)}
+.bar-row{display:flex;align-items:center;gap:.7rem;margin-bottom:.5rem}
+.bar-label{font-size:.75rem;color:var(--text2);width:160px;flex-shrink:0;text-align:right;line-height:1.3}
+.bar-track{flex:1;height:24px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;display:flex;align-items:center;padding-left:.5rem;font-size:.7rem;font-weight:700;color:#fff;border-radius:4px}
+.c0{background:linear-gradient(90deg,#0ea5e9,#38bdf8)}.c1{background:linear-gradient(90deg,#7c3aed,#a78bfa)}
+.c2{background:linear-gradient(90deg,#059669,#34d399)}.c3{background:linear-gradient(90deg,#d97706,#fbbf24)}
+.c4{background:linear-gradient(90deg,#db2777,#f472b6)}.c5{background:linear-gradient(90deg,#0891b2,#22d3ee)}
+.c6{background:linear-gradient(90deg,#65a30d,#bef264)}.c7{background:linear-gradient(90deg,#9333ea,#e879f9)}
+.c8{background:linear-gradient(90deg,#dc2626,#f87171)}.c9{background:linear-gradient(90deg,#0d9488,#2dd4bf)}
 
 /* Tabs */
-.tabs{display:flex;gap:.4rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
-.tab{padding:.55rem 1.1rem;border-radius:8px 8px 0 0;font-size:.85rem;font-weight:500;cursor:pointer;color:var(--text3);border:1px solid transparent;border-bottom:none;transition:all .15s;margin-bottom:-1px}
+.tabs{display:flex;gap:.35rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.tab{padding:.5rem 1rem;border-radius:8px 8px 0 0;font-size:.83rem;font-weight:500;cursor:pointer;color:var(--text3);border:1px solid transparent;border-bottom:none;transition:all .15s;margin-bottom:-1px}
 .tab.active{background:var(--bg2);border-color:var(--border);color:var(--accent)}
 .tab:hover:not(.active){color:var(--text)}
 
 /* Detail */
-.detail-block{margin-bottom:1.75rem;padding-bottom:1.75rem;border-bottom:1px solid var(--border)}
+.detail-block{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)}
 .detail-block:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-.summary-text{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:.85rem 1rem;font-size:.82rem;color:#cbd5e1;line-height:1.65;margin:.6rem 0}
+.summary-text{background:var(--bg3);border-left:3px solid var(--accent);border-radius:0 7px 7px 0;padding:.8rem 1rem;font-size:.81rem;color:#cbd5e1;line-height:1.65;margin:.55rem 0}
+
+.qt-last-sub td{border-bottom:2px solid #334155 !important}
+/* Raw data table */
+.raw-table th{white-space:nowrap;min-width:90px}
+.raw-table td{white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
 
 /* Loading */
-.loading{display:flex;align-items:center;gap:.75rem;color:var(--text2);font-size:.875rem;padding:1rem 0}
+.loading{display:flex;align-items:center;gap:.75rem;color:var(--text2);font-size:.875rem;padding:.75rem 0}
 .spin{width:20px;height:20px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .alert-warn{padding:.75rem 1rem;border-radius:8px;font-size:.85rem;margin-top:.75rem;background:#422006;border:1px solid #78350f;color:#fde68a}
-
-footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem;border-top:1px solid var(--border);margin-top:1rem}
-@media(max-width:600px){
-  .header h1{font-size:1.5rem}
-  .app{padding:1rem}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .bar-label{width:90px}
-}
+footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.75rem;border-top:1px solid var(--border);margin-top:1rem}
+@media(max-width:600px){.header h1{font-size:1.5rem}.app{padding:1rem}.stats-grid{grid-template-columns:1fr 1fr}.bar-label{width:90px}}
 </style>
 </head>
 <body>
@@ -139,14 +134,14 @@ footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem
 
   <div class="header">
     <h1>Query Analysis Portal</h1>
-    <p>Upload multiple ticket data files &bull; Merge &amp; analyze &bull; Export consolidated report</p>
+    <p>Upload ticket files &bull; Auto-classify Query Type &amp; Sub Query Type &bull; Consolidated report</p>
   </div>
 
-  <!-- Step 1 — Sample -->
+  <!-- Step 1 -->
   <div class="card">
     <div class="card-title"><span class="step-badge">1</span> Download Sample File</div>
-    <p style="color:var(--text2);font-size:.875rem;margin-bottom:1.1rem">
-      Download a sample file with all 18 required headers. Fill it with your data, then upload one or more files below.
+    <p style="color:var(--text2);font-size:.875rem;margin-bottom:1rem">
+      Download a sample with all 18 required headers. The portal auto-assigns <strong style="color:var(--accent)">Query Type</strong> and <strong style="color:var(--accent2)">Sub Query Type</strong> from the Query Statement column using the built-in taxonomy.
     </p>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="downloadSampleCSV()">&#8659; Sample CSV</button>
@@ -154,21 +149,17 @@ footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem
     </div>
   </div>
 
-  <!-- Step 2 — Upload -->
+  <!-- Step 2 -->
   <div class="card">
-    <div class="card-title"><span class="step-badge">2</span> Upload Data Files &mdash; Select Multiple at Once</div>
-
+    <div class="card-title"><span class="step-badge">2</span> Upload Data Files — Multiple Allowed</div>
     <div id="uploadZone" class="upload-zone"
          onclick="document.getElementById('fileIn').click()"
-         ondragover="onDrag(event,'over')"
-         ondragleave="onDrag(event,'leave')"
-         ondrop="onDrag(event,'drop')">
+         ondragover="onDrag(event,'over')" ondragleave="onDrag(event,'leave')" ondrop="onDrag(event,'drop')">
       <span class="upload-icon">&#9729;</span>
       <strong>Click to browse or drag &amp; drop multiple files</strong>
-      <p>CSV and XLSX supported &mdash; select as many files as needed</p>
+      <p>CSV and XLSX supported &bull; Query Type &amp; Sub Query Type auto-assigned from Query Statement</p>
     </div>
     <input type="file" id="fileIn" accept=".csv,.xlsx,.xls" multiple onchange="handleFiles(event)"/>
-
     <div id="fileQueue" class="file-queue"></div>
     <div id="mergeBanner" style="display:none"></div>
     <div id="alertArea"></div>
@@ -176,539 +167,899 @@ footer{text-align:center;padding:2rem 0 1rem;color:var(--text3);font-size:.78rem
 
   <!-- Results -->
   <div id="results" style="display:none">
-
     <div id="statsGrid" class="stats-grid"></div>
 
     <div class="tabs">
-      <div class="tab active" onclick="showTab('summary',this)">Summary Table</div>
-      <div class="tab" onclick="showTab('chart',this)">Visual Chart</div>
-      <div class="tab" onclick="showTab('detail',this)">Detailed View</div>
+      <div class="tab active" onclick="showTab('summary',this)">Summary</div>
+      <div class="tab" onclick="showTab('subquery',this)">Sub Query Breakdown</div>
+      <div class="tab" onclick="showTab('chart',this)">Chart</div>
+      <div class="tab" onclick="showTab('detail',this)">Detail View</div>
+      <div class="tab" onclick="showTab('rawdata',this)">Classified Data</div>
     </div>
 
+    <!-- Summary tab -->
     <div id="tab-summary" class="card">
       <div class="card-title">Consolidated Query Type Summary</div>
       <div id="sourceFilesLine" style="margin-bottom:.85rem"></div>
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>#</th><th>Campaign Name</th><th>Query Type</th><th>Count</th><th>% Share</th>
-              <th>Open</th><th>Closed</th><th>Avg Age</th><th>Source Files</th><th>Consolidated Summary</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th>#</th><th>Campaign</th><th>Query Type</th><th>Total</th><th>% Share</th><th>Sub Query Type</th><th>Sub Count</th><th>Consolidated Summary</th>
+          </tr></thead>
           <tbody id="summaryBody"></tbody>
         </table>
       </div>
     </div>
 
+    <!-- Sub Query breakdown tab -->
+    <div id="tab-subquery" class="card" style="display:none">
+      <div class="card-title">Sub Query Type Breakdown</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>#</th><th>Query Type</th><th>Sub Query Type</th><th>Count</th><th>% of Type</th><th>Confidence</th><th>Consolidated Summary</th>
+          </tr></thead>
+          <tbody id="subqueryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Chart tab -->
     <div id="tab-chart" class="card" style="display:none">
-      <div class="card-title">Query Distribution</div>
+      <div class="card-title">Query Type Distribution</div>
       <div id="chartArea" style="padding:.5rem 0"></div>
     </div>
 
+    <!-- Detail tab -->
     <div id="tab-detail" class="card" style="display:none">
-      <div class="card-title">Detailed Breakdown</div>
+      <div class="card-title">Detailed Breakdown by Query Type</div>
       <div id="detailArea"></div>
+    </div>
+
+    <!-- Raw / Classified data tab -->
+    <div id="tab-rawdata" class="card" style="display:none">
+      <div class="card-title">Classified Data — All Rows with Assigned Query Type &amp; Sub Query Type</div>
+      <p style="color:var(--text2);font-size:.8rem;margin-bottom:.85rem">Every uploaded row with auto-assigned Query Type and Sub Query Type. Rows where the original data already had a Query Type are shown with that value; empty rows get the auto-classified value.</p>
+      <div class="table-wrap">
+        <table class="raw-table">
+          <thead><tr id="rawHead"></tr></thead>
+          <tbody id="rawBody"></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Step 3 -->
     <div class="card">
-      <div class="card-title"><span class="step-badge">3</span> Export Consolidated Report</div>
-      <p style="color:var(--text2);font-size:.875rem;margin-bottom:1.1rem">
-        Download the merged analysis from all uploaded files — query type summaries, counts, source file breakdown, and consolidated statements.
-      </p>
-      <div class="btn-row">
-        <button class="btn btn-success" onclick="exportXLSX()">&#8659; Download XLSX</button>
-        <button class="btn btn-ghost" onclick="exportCSV()">&#8659; Download CSV</button>
+      <div class="card-title"><span class="step-badge">3</span> Download Reports</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.25rem">
+
+        <div style="background:var(--bg3);border:1px solid #1e3a5f;border-radius:var(--radius);padding:1.1rem">
+          <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:.4rem">&#128196; Corrected Original File</div>
+          <p style="color:var(--text2);font-size:.78rem;margin-bottom:.85rem;line-height:1.5">
+            Your original uploaded data with two new columns added: <strong>Auto Query Type</strong> and <strong>Sub Query Type</strong> (auto-classified from Query Statement). All original columns preserved.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="exportCorrectedXLSX()">&#8659; Download Corrected XLSX</button>
+            <button class="btn btn-ghost" onclick="exportCorrectedCSV()">&#8659; CSV</button>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border:1px solid #064e3b;border-radius:var(--radius);padding:1.1rem">
+          <div style="font-size:.82rem;font-weight:700;color:var(--success);margin-bottom:.4rem">&#128202; Consolidated Summary Report</div>
+          <p style="color:var(--text2);font-size:.78rem;margin-bottom:.85rem;line-height:1.5">
+            Full analysis: Query Type &amp; Sub Query Type counts, open/closed split, consolidated summaries, and sub query breakdown — one row per Sub Query Type.
+          </p>
+          <div class="btn-row">
+            <button class="btn btn-success" onclick="exportSummaryXLSX()">&#8659; Download Summary XLSX</button>
+            <button class="btn btn-ghost" onclick="exportCSV()">&#8659; CSV</button>
+          </div>
+        </div>
+
       </div>
     </div>
-
   </div>
 </div>
 
-<footer>Query Analysis Portal &mdash; Multi-file consolidated reporting &bull; Single HTML file &bull; No server required</footer>
+<footer>Query Analysis Portal &bull; Auto-classifies using embedded Query Type taxonomy &bull; Single HTML file &bull; No server required</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 'use strict';
 
-var HEADERS = [
-  'Received Date','Ticket ID','Campaign Name','Candidate Name','Email ID',
+/* ═══════════════════════════════════════════════════════════
+   TAXONOMY — embedded from query_type.xlsx
+   Each entry: {queryType, subQueryType, statement, keywords[]}
+═══════════════════════════════════════════════════════════ */
+var TAXONOMY = [{"queryType":"Admit Card","subQueryType":"General Inquiry","statement":"Candidate was Generally Inquiring about the Admit Card."},{"queryType":"Admit Card","subQueryType":"Edit Admit Card","statement":"Candidate had made a mistake in Name, Gender, Address, DOB While filling the admit card & wanted to correct it."},{"queryType":"Admit Card","subQueryType":"Unable to login","statement":"Candidate was Unable to Login"},{"queryType":"Admit Card","subQueryType":"Unable to Download Admit Card","statement":"Candidate was Unable to download Admit Card."},{"queryType":"Application Field","subQueryType":"Application Link Unavailable","statement":"Candidate wanted to fill the form but due to some Technical errors he was unable to find the Link/Tab."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate has forgot User-ID and Password so asked them to use Forgot Password Option."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate has not received User-ID and Password on his Registered Mobile number and Email-ID."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate is unable to login application form."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate is unable to select qualification fields."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Unable to upload documents"},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate wanted to know Application Live Date and Closing Date."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate wanted to know which name he will entered in application form."},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate required confirmation form his form will reject or exccepted while made mistake in the application form"},{"queryType":"Application Field","subQueryType":"Application Phase Inquiry","statement":"Candidate was generally inquiring about the application form."},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate had entered wrong Date of Birth and wanted to correct it"},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate had entered wrong Email ID and wanted to correct it"},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate had entered wrong Qualification details and wanted to correct it."},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate had made a mistake in Name, Gender, Address, DOB, and wrong document uploaded while filling out the application form and wanted to correct it."},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate is Unable to Register"},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Candidate is unable to upload photo/Signature due to some errors"},{"queryType":"Application Field","subQueryType":"Edit Profile Info","statement":"Due to some Technical error occurred Candidate was Unable to submit Application Form"},{"queryType":"Application Field","subQueryType":"Photo/Signature Not Visible","statement":"Candidate has raised an issue as the Photo and Signature are not Visible/Vice Versa on the Application Form and wanted to correct it."},{"queryType":"Application Field","subQueryType":"Required Documents Not Available","statement":"Candidate does not have the required documents to upload."},{"queryType":"Application Field","subQueryType":"Required Documents Not Available","statement":"Candidate is unable to upload documents."},{"queryType":"Application Field","subQueryType":"User Credentials Not Received","statement":"Candidate has not received User-ID and Password on his Registered Mobile number and Email-ID"},{"queryType":"Application Payment","subQueryType":"Payment Failure","statement":"Candidate has made the payment but is in status. It is reflected as a payment failure."},{"queryType":"Application Payment","subQueryType":"Payment Gateway Unavailable","statement":"Candidate is unable to make Payment as Payment Gateway is unavailable."},{"queryType":"Application Payment","subQueryType":"Payment Process Inquiry","statement":"Candidate wants to know about the Payment Procedure."},{"queryType":"Application Payment","subQueryType":"Payment Process Inquiry","statement":"Candidate was Generally Inquiring about the Payment."},{"queryType":"Application Payment","subQueryType":"Payment Status","statement":"Candidate wants to confirm whether Payment Status is Successful or not."},{"queryType":"Application Payment","subQueryType":"Refund Request","statement":"Candidate has asked for refund as payment is made multiple time."},{"queryType":"Eligibility Check","subQueryType":"Age/Caste/State Related Query","statement":"Candidate wanted to confirm whether they are Eligible to apply as per Age."},{"queryType":"Eligibility Check","subQueryType":"Age/Caste/State Related Query","statement":"Candidate was generally enquiring about the eligibility criteria."},{"queryType":"Eligibility Check","subQueryType":"Qualification Related Query","statement":"Candidate wanted to confirm whether His/her Qualification meets the Eligibility Criteria."},{"queryType":"Eligibility Check","subQueryType":"Work Experience Related Query","statement":"Candidate wanted to confirm whether His/her Work Experience meets the Eligibility Criteria."},{"queryType":"Edit Window","subQueryType":"Age/Caste/State Related Query","statement":"Candidate wanted to Edit Age/Caste/State"},{"queryType":"Edit Window","subQueryType":"Qualification,Work Experience Related Query","statement":"Candidate wanted to Edit Qualification"},{"queryType":"Edit Window","subQueryType":"Registration Details","statement":"Candidate wanted to Edit Registration details"},{"queryType":"Edit Window","subQueryType":"Photo & Signature","statement":"Candidate wanted to Edit Photo & Signature"},{"queryType":"Edit Window","subQueryType":"Unable to Edit form","statement":"Candidate was Unable to Login to Edit form."},{"queryType":"Examination","subQueryType":"Change_Exam Date/Time","statement":"Candidate has requested to Change the Exam Date/Time due to some Reason."},{"queryType":"Examination","subQueryType":"Change_Test Center","statement":"Candidate has requested to change the preferred Test Center."},{"queryType":"Examination","subQueryType":"General Inquiry","statement":"Candidate has a query for Mock Test."},{"queryType":"Examination","subQueryType":"General Inquiry","statement":"Candidate was Generally Inquiring about Exam."},{"queryType":"Examination","subQueryType":"General Inquiry","statement":"Candidate requested to reenter the exam center because they were late."},{"queryType":"Other","subQueryType":"False Query","statement":"Call got Disconnected from Candidates end."},{"queryType":"Other","subQueryType":"False Query","statement":"False/Unwanted details asked by the Candidate."},{"queryType":"Other","subQueryType":"False Query","statement":"Language Barrier. Unable to understand about candidates query."},{"queryType":"Other","subQueryType":"False Query","statement":"Candiate enquiry for other Campaign & Post"},{"queryType":"Other","subQueryType":"False Query","statement":"The head department is not answering Call or Email"},{"queryType":"Other","subQueryType":"False Query","statement":"There was no response from candidates End."},{"queryType":"Result","subQueryType":"Result Details","statement":"Candidates generaly enquiring about Result."},{"queryType":"Result","subQueryType":"Result Enquiry","statement":"Candidate asked general enquiry about Syllabus/Exam/Result."},{"queryType":"Result","subQueryType":"Result Enquiry","statement":"Result inquiry - Date & Time."},{"queryType":"Result","subQueryType":"Unable to Download Result","statement":"Candidate was Unable to download Result."},{"queryType":"Result","subQueryType":"Unable to Login","statement":"Candidate was Unable to Login."},{"queryType":"Objection Phase","subQueryType":"Unable to Login & submit Form","statement":"Candidate is unable to login application form."},{"queryType":"Objection Phase","subQueryType":"Anwer Key","statement":"Candidate Answer key is incorrect"},{"queryType":"Objection Phase","subQueryType":"Correction Required","statement":"Candidate Answer key required correction"},{"queryType":"Objection Phase","subQueryType":"Objection Inquiry","statement":"Candidate was generally inquiring about the objection form."},{"queryType":"Objection Phase","subQueryType":"Unable to Login","statement":"Candidate was Unable to Login."},{"queryType":"Objection Phase","subQueryType":"Unbale to Select fields","statement":"Candidate is unable to select objection fields."},{"queryType":"Admission Phase","subQueryType":"Counselling Inquiry","statement":"Candidate was generally inquiring about the counselling."},{"queryType":"Admission Phase","subQueryType":"Admission Fees","statement":"Candidate was inquiring about the admission Fees."},{"queryType":"Admission Phase","subQueryType":"Admission Inquiry","statement":"Candidate was generally inquiring about the admission."},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"Candidate Name is incorrect in the e-Call Letter"},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"Candidate Photo is incorrect in the e-Call Letter"},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"E-Call letter is not visible after download for printing"},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"Not able to download my e-Call Letter"},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"Registration Number is incorrect in the e-Call Letter"},{"queryType":"Admit Card","subQueryType":"e-Call Letter Related","statement":"What documents should I bring to the test center"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Candidate Name is incorrect in the exam city intimation advice"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Candidate Photo and Signature is incorrect in the exam city intimation advice"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"I have not received my Free Travel Pass"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Not able to download my exam city intimation advice"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Registration Number is incorrect in the exam city intimation advice"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Test Center details are not present in the exam city intimation advice"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"Travel authority pass is not visible after download for printing"},{"queryType":"Examination","subQueryType":"Exam City Intimation Advice","statement":"What documents should I bring to the test center"},{"queryType":"Result","subQueryType":"Score Card","statement":"Error in score card"},{"queryType":"Result","subQueryType":"Score Card","statement":"Score Card not available for download"}];
+
+/* Pre-compute keyword tokens for each taxonomy entry */
+var STOP = {a:1,an:1,the:1,is:1,in:1,on:1,at:1,to:1,for:1,of:1,and:1,or:1,but:1,as:1,his:1,her:1,they:1,them:1,their:1,he:1,she:1,it:1,was:1,has:1,had:1,have:1,been:1,be:1,are:1,were:1,will:1,would:1,could:1,should:1,may:1,can:1,so:1,by:1,from:1,with:1,about:1,that:1,this:1,these:1,those:1,while:1,when:1,where:1,what:1,which:1,who:1,whom:1,whose:1,how:1,why:1,if:1,then:1,than:1,into:1,out:1,up:1,over:1,after:1,before:1,some:1,make:1,made:1,also:1,not:1,no:1,do:1,does:1,did:1};
+
+function tokenize(text) {
+  return (text || '').toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(function(w){ return w.length > 2 && !STOP[w]; });
+}
+
+// Build token sets for each taxonomy entry
+TAXONOMY.forEach(function(t) {
+  t._tokens = tokenize(t.statement);
+  // also tokenize query type and sub type for bonus matching
+  t._qtTokens = tokenize(t.queryType + ' ' + t.subQueryType);
+});
+
+/* ═══════════════════════════════════════════════
+   CLASSIFIER — returns {queryType, subQueryType, confidence, score}
+═══════════════════════════════════════════════ */
+function classifyStatement(stmt) {
+  if (!stmt || !stmt.trim()) return { queryType:'Unclassified', subQueryType:'Unknown', confidence:'low', score:0 };
+
+  var tokens = tokenize(stmt);
+  if (!tokens.length) return { queryType:'Unclassified', subQueryType:'Unknown', confidence:'low', score:0 };
+  var tokenSet = {};
+  tokens.forEach(function(t){ tokenSet[t] = 1; });
+
+  var best = null;
+  var bestScore = 0;
+
+  TAXONOMY.forEach(function(entry) {
+    var score = 0;
+    var matched = 0;
+    // Token overlap with statement
+    entry._tokens.forEach(function(t) {
+      if (tokenSet[t]) { score += 2; matched++; }
+    });
+    // Partial / substring match bonus
+    var stmtLow = stmt.toLowerCase();
+    entry._tokens.forEach(function(t) {
+      if (stmtLow.indexOf(t) !== -1) score += 0.5;
+    });
+    // Query type keyword bonus
+    entry._qtTokens.forEach(function(t) {
+      if (tokenSet[t]) score += 1;
+      if (stmtLow.indexOf(t) !== -1) score += 0.3;
+    });
+    // Normalise by entry token count so longer entries don't dominate unfairly
+    var norm = score / Math.max(entry._tokens.length, 1);
+
+    if (norm > bestScore) {
+      bestScore = norm;
+      best = { queryType: entry.queryType, subQueryType: entry.subQueryType, score: norm, matched: matched, total: entry._tokens.length };
+    }
+  });
+
+  if (!best || bestScore < 0.3) {
+    return { queryType:'Other', subQueryType:'False Query', confidence:'low', score:bestScore };
+  }
+  var confidence = bestScore >= 1.5 ? 'high' : bestScore >= 0.7 ? 'medium' : 'low';
+  return { queryType: best.queryType, subQueryType: best.subQueryType, confidence: confidence, score: Math.round(bestScore*10)/10 };
+}
+
+/* ═══════════════════════════════════════════════
+   HEADERS & SAMPLE
+═══════════════════════════════════════════════ */
+var HEADERS = ['Received Date','Ticket ID','Campaign Name','Candidate Name','Email ID',
   'Mobile No','Registration No','Query Type','Query Statement','PM Response',
   'Status','Response Date','Age','Scale','Reopen Query','Reopen PM Response',
-  'Reopen Query 2','Reopen PM Response 2'
+  'Reopen Query 2','Reopen PM Response 2'];
+
+var SAMPLE = [HEADERS,
+  ['2024-01-15','TKT-001','Campaign Alpha','John Smith','john@email.com','9876543210','REG001','','Unable to process payment, payment reflected as failure','Payment gateway issue resolved','Closed','2024-01-16',1,'High','','','',''],
+  ['2024-01-15','TKT-002','Campaign Alpha','Jane Doe','jane@email.com','9876543211','REG002','','Candidate is unable to login application form','Server cache cleared','Closed','2024-01-17',2,'Medium','App still crashing','Reset app cache','',''],
+  ['2024-01-16','TKT-003','Campaign Beta','Mike Johnson','mike@email.com','9876543212','REG003','','Candidate was generally inquiring about the admit card','Please visit portal','Open','','','Medium','','','',''],
+  ['2024-01-16','TKT-004','Campaign Beta','Sarah Lee','sarah@email.com','9876543213','REG004','','Candidate has asked for refund as payment is made multiple times','Refund initiated','Open','','','High','','','',''],
+  ['2024-01-17','TKT-005','Campaign Alpha','Raj Kumar','raj@email.com','9876543214','REG005','','Candidate was Unable to download Result','Result link fixed','Closed','2024-01-18',1,'Low','','','',''],
+  ['2024-01-17','TKT-006','Campaign Gamma','Priya Mehta','priya@email.com','9876543215','REG006','','Candidate wanted to confirm whether qualification meets the eligibility criteria','Qualification verified','Closed','2024-01-19',2,'Medium','','','',''],
+  ['2024-01-18','TKT-007','Campaign Gamma','Ali Khan','ali@email.com','9876543216','REG007','','Not able to download my e-Call Letter','E-call letter link fixed','Closed','2024-01-19',1,'Low','','','',''],
+  ['2024-01-18','TKT-008','Campaign Alpha','Chen Wei','chen@email.com','9876543217','REG008','','Candidate had entered wrong Date of Birth and wanted to correct it','Profile edit enabled','Closed','2024-01-20',2,'Medium','','','',''],
+  ['2024-01-19','TKT-009','Campaign Beta','Fatima Shaikh','fatima@email.com','9876543218','REG009','','Candidate has requested to Change the Exam Date due to some Reason','Rescheduling not allowed','Open','','','High','','','',''],
+  ['2024-01-20','TKT-010','Campaign Gamma','Tom Brown','tom@email.com','9876543219','REG010','','Candidate was generally inquiring about the counselling','Counselling schedule shared','Closed','2024-01-21',1,'Low','','','','']
 ];
 
-var SAMPLE = [
-  HEADERS,
-  ['2024-01-15','TKT-001','Campaign Alpha','John Smith','john@email.com','9876543210','REG001','Billing Issue','Unable to process payment for registration','Payment gateway issue resolved','Closed','2024-01-16',1,'High','','','',''],
-  ['2024-01-15','TKT-002','Campaign Alpha','Jane Doe','jane@email.com','9876543211','REG002','Technical Issue','Login page not loading on mobile','Server cache cleared','Closed','2024-01-17',2,'Medium','App still crashing','Reset app cache','',''],
-  ['2024-01-16','TKT-003','Campaign Beta','Mike Johnson','mike@email.com','9876543212','REG003','Enrollment Query','How to enroll in the advanced module?','Please visit the enrollment portal','Open','','','Medium','','','',''],
-  ['2024-01-16','TKT-004','Campaign Beta','Sarah Lee','sarah@email.com','9876543213','REG004','Billing Issue','Duplicate payment deducted','Refund initiated','Open','','','High','','','',''],
-  ['2024-01-17','TKT-005','Campaign Alpha','Raj Kumar','raj@email.com','9876543214','REG005','Technical Issue','Certificate not downloading','PDF server fixed','Closed','2024-01-18',1,'Low','','','',''],
-  ['2024-01-17','TKT-006','Campaign Gamma','Priya Mehta','priya@email.com','9876543215','REG006','Enrollment Query','Can I change my batch timing?','Batch change allowed once','Closed','2024-01-19',2,'Medium','','','',''],
-  ['2024-01-18','TKT-007','Campaign Gamma','Ali Khan','ali@email.com','9876543216','REG007','Document Request','Need enrollment certificate copy','Certificate emailed','Closed','2024-01-19',1,'Low','','','',''],
-  ['2024-01-18','TKT-008','Campaign Alpha','Chen Wei','chen@email.com','9876543217','REG008','Billing Issue','GST invoice not received','Invoice resent to email','Closed','2024-01-20',2,'Medium','','','',''],
-  ['2024-01-19','TKT-009','Campaign Beta','Fatima Shaikh','fatima@email.com','9876543218','REG009','Technical Issue','Video lectures buffering issue','CDN settings optimised','Open','','','High','Still buffering','Escalated to tech team','',''],
-  ['2024-01-20','TKT-010','Campaign Gamma','Tom Brown','tom@email.com','9876543219','REG010','General Enquiry','What are the exam dates?','Exam schedule shared','Closed','2024-01-21',1,'Low','','','','']
-];
+var BADGE_CLS = ['b0','b1','b2','b3','b4','b5','b6','b7','b8','b9'];
+var BAR_CLS   = ['c0','c1','c2','c3','c4','c5','c6','c7','c8','c9'];
 
-var BADGE_CLS = ['b0','b1','b2','b3','b4','b5','b6','b7'];
-var BAR_CLS   = ['c0','c1','c2','c3','c4','c5','c6','c7'];
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+var fileList  = [];
+var allRows   = [];  // enriched with __qt, __sq, __conf, __source
+var analysis  = [];
+var subAnalysis = [];
+var fileIdSeq = 0;
 
-/* ── State ── */
-var fileList   = [];   // { id, name, size, status:'pending'|'parsing'|'done'|'error', rows:[], rowCount:0 }
-var allRows    = [];   // merged rows from all done files
-var analysis   = [];
-var fileIdSeq  = 0;
-
-/* ── Drag/Drop ── */
+/* ═══════════════════════════════════════════════
+   DRAG/DROP & FILE HANDLING
+═══════════════════════════════════════════════ */
 function onDrag(e, type) {
   e.preventDefault();
   var z = document.getElementById('uploadZone');
-  if (type === 'over')  { z.classList.add('drag'); }
-  if (type === 'leave') { z.classList.remove('drag'); }
-  if (type === 'drop')  {
+  if (type==='over') z.classList.add('drag');
+  if (type==='leave') z.classList.remove('drag');
+  if (type==='drop') {
     z.classList.remove('drag');
     addFiles(e.dataTransfer.files);
   }
 }
-function handleFiles(e) { addFiles(e.target.files); e.target.value = ''; }
+function handleFiles(e) { addFiles(e.target.files); e.target.value=''; }
 
 function addFiles(fileObjs) {
-  var arr = Array.prototype.slice.call(fileObjs);
-  arr.forEach(function(f) {
+  Array.prototype.slice.call(fileObjs).forEach(function(f) {
     var ext = f.name.split('.').pop().toLowerCase();
-    if (['csv','xlsx','xls'].indexOf(ext) === -1) return;
-    // Avoid duplicates by name+size
-    var dup = fileList.some(function(x){ return x.name === f.name && x.size === f.size; });
-    if (dup) return;
-    var id = ++fileIdSeq;
-    fileList.push({ id:id, name:f.name, size:f.size, status:'pending', rows:[], rowCount:0, fileObj:f });
+    if (['csv','xlsx','xls'].indexOf(ext)===-1) return;
+    if (fileList.some(function(x){ return x.name===f.name && x.size===f.size; })) return;
+    fileList.push({id:++fileIdSeq, name:f.name, size:f.size, status:'pending', rows:[], rowCount:0, fileObj:f});
   });
   renderQueue();
   processNextPending();
 }
 
 function removeFile(id) {
-  fileList = fileList.filter(function(f){ return f.id !== id; });
+  fileList = fileList.filter(function(f){ return f.id!==id; });
   renderQueue();
   mergeAndAnalyze();
 }
+function clearAll() { fileList=[]; renderQueue(); document.getElementById('results').style.display='none'; document.getElementById('mergeBanner').style.display='none'; }
 
-function clearAll() {
-  fileList = [];
-  renderQueue();
-  document.getElementById('results').style.display = 'none';
-  document.getElementById('mergeBanner').style.display = 'none';
-}
-
-/* ── Render file queue ── */
 function renderQueue() {
   var el = document.getElementById('fileQueue');
-  if (!fileList.length) { el.innerHTML = ''; return; }
-
+  if (!fileList.length) { el.innerHTML=''; return; }
   el.innerHTML = fileList.map(function(f) {
-    var icon = f.status === 'done' ? '&#9989;' : f.status === 'error' ? '&#10060;' : '&#128196;';
-    var statusHtml = f.status === 'parsing'
+    var icon = f.status==='done'?'&#9989;':f.status==='error'?'&#10060;':'&#128196;';
+    var statusHtml = f.status==='parsing'
       ? '<span class="mini-spin"></span>'
-      : '<span class="file-status ' + f.status + '">'
-          + (f.status==='done' ? f.rowCount+' rows' : f.status==='error' ? 'Error' : 'Pending')
-          + '</span>';
-    return '<div class="file-item ' + (f.status==='done'?'done':f.status==='error'?'error':'') + '" id="fitem-'+f.id+'">' +
-      '<span class="file-icon">' + icon + '</span>' +
-      '<span class="file-name" title="'+esc(f.name)+'">' + esc(f.name) + '</span>' +
-      '<span class="file-size">' + (f.size/1024).toFixed(1) + ' KB</span>' +
+      : '<span class="fi-status '+f.status+'">'+(f.status==='done'?f.rowCount+' rows':f.status==='error'?'Error':'Pending')+'</span>';
+    return '<div class="file-item '+(f.status==='done'?'done':f.status==='error'?'error':'')+'">' +
+      '<span>'+icon+'</span>' +
+      '<span class="fi-name" title="'+esc(f.name)+'">'+esc(f.name)+'</span>' +
+      '<span class="fi-size">'+(f.size/1024).toFixed(1)+' KB</span>' +
       statusHtml +
-      (f.status !== 'parsing' ? '<button class="file-remove" onclick="removeFile('+f.id+')" title="Remove">&#10005;</button>' : '') +
+      (f.status!=='parsing'?'<button class="fi-rm" onclick="removeFile('+f.id+')" title="Remove">&#10005;</button>':'') +
       '</div>';
   }).join('');
-
-  // Clear all button
-  if (fileList.length > 1) {
-    el.innerHTML += '<div style="margin-top:.5rem">' +
-      '<button class="btn btn-danger-sm" onclick="clearAll()">&#10005; Clear All Files</button>' +
-      '</div>';
+  if (fileList.length>1) {
+    el.innerHTML += '<div style="margin-top:.4rem"><button class="btn btn-sm-danger" onclick="clearAll()">&#10005; Clear All</button></div>';
   }
 }
 
-function updateFileItem(id, status, rowCount) {
-  var f = fileList.find(function(x){ return x.id === id; });
-  if (!f) return;
-  f.status = status;
-  f.rowCount = rowCount || 0;
-  renderQueue();
-}
-
-/* ── Process files one by one ── */
 function processNextPending() {
-  var pending = fileList.find(function(f){ return f.status === 'pending'; });
-  if (!pending) return;
-  pending.status = 'parsing';
-  renderQueue();
-  parseFile(pending, function(err, rows) {
-    if (err) {
-      pending.status = 'error';
-      pending.rows = [];
-    } else {
-      pending.status = 'done';
-      pending.rows = rows;
-      pending.rowCount = rows.length;
-    }
+  var p = fileList.find(function(f){ return f.status==='pending'; });
+  if (!p) return;
+  p.status='parsing'; renderQueue();
+  parseFile(p, function(err, rows) {
+    p.status = err?'error':'done';
+    p.rows   = err?[]:rows;
+    p.rowCount = p.rows.length;
     renderQueue();
-    processNextPending();  // parse next
+    processNextPending();
     mergeAndAnalyze();
   });
 }
 
-function parseFile(fileEntry, cb) {
-  var ext = fileEntry.fileObj.name.split('.').pop().toLowerCase();
+function parseFile(entry, cb) {
+  var ext = entry.fileObj.name.split('.').pop().toLowerCase();
   var reader = new FileReader();
-  if (ext === 'csv') {
+  if (ext==='csv') {
     reader.onload = function(ev) {
       try {
-        var result = Papa.parse(ev.target.result, {
-          header: true, skipEmptyLines: true,
-          transformHeader: function(h){ return h.trim(); }
-        });
-        cb(null, result.data);
-      } catch(e) { cb(e); }
+        var r = Papa.parse(ev.target.result,{header:true,skipEmptyLines:true,transformHeader:function(h){return h.trim();}});
+        cb(null, r.data);
+      } catch(e){cb(e);}
     };
-    reader.onerror = function(){ cb(new Error('Read error')); };
-    reader.readAsText(fileEntry.fileObj);
+    reader.onerror=function(){cb(new Error('read error'));};
+    reader.readAsText(entry.fileObj);
   } else {
     reader.onload = function(ev) {
       try {
-        var wb  = XLSX.read(ev.target.result, { type:'binary' });
-        var ws  = wb.Sheets[wb.SheetNames[0]];
-        var raw = XLSX.utils.sheet_to_json(ws, { defval:'' });
-        var norm = raw.map(function(r) {
-          var o = {};
-          Object.keys(r).forEach(function(k){ o[k.trim()] = r[k]; });
-          return o;
-        });
-        cb(null, norm);
-      } catch(e) { cb(e); }
+        var wb=XLSX.read(ev.target.result,{type:'binary'});
+        var ws=wb.Sheets[wb.SheetNames[0]];
+        var raw=XLSX.utils.sheet_to_json(ws,{defval:''});
+        cb(null, raw.map(function(r){var o={};Object.keys(r).forEach(function(k){o[k.trim()]=r[k];});return o;}));
+      } catch(e){cb(e);}
     };
-    reader.onerror = function(){ cb(new Error('Read error')); };
-    reader.readAsBinaryString(fileEntry.fileObj);
+    reader.onerror=function(){cb(new Error('read error'));};
+    reader.readAsBinaryString(entry.fileObj);
   }
 }
 
-/* ── Merge all done files and re-analyze ── */
+/* ═══════════════════════════════════════════════
+   MERGE & ANALYZE
+═══════════════════════════════════════════════ */
+function getCol(row, name) {
+  var k = Object.keys(row).find(function(k){ return k.toLowerCase()===name.toLowerCase(); });
+  return k ? String(row[k]||'').trim() : '';
+}
+
 function mergeAndAnalyze() {
-  var doneFiles = fileList.filter(function(f){ return f.status === 'done'; });
-  if (!doneFiles.length) {
-    document.getElementById('results').style.display = 'none';
-    document.getElementById('mergeBanner').style.display = 'none';
+  var done = fileList.filter(function(f){ return f.status==='done'; });
+  if (!done.length) {
+    document.getElementById('results').style.display='none';
+    document.getElementById('mergeBanner').style.display='none';
     return;
   }
-
-  // Tag each row with source file name
+  // Merge + classify
   allRows = [];
-  doneFiles.forEach(function(f) {
+  done.forEach(function(f) {
     f.rows.forEach(function(r) {
-      var copy = {};
-      Object.keys(r).forEach(function(k){ copy[k] = r[k]; });
-      copy['__source__'] = f.name;
+      var copy = {}; Object.keys(r).forEach(function(k){ copy[k]=r[k]; });
+      var stmt = getCol(r,'Query Statement');
+      var classified = classifyStatement(stmt);
+      // Use existing Query Type from data if it exists and is not empty
+      var existingQt = getCol(r,'Query Type');
+      copy['__qt']     = existingQt || classified.queryType;
+      copy['__sq']     = classified.subQueryType;
+      copy['__conf']   = classified.confidence;
+      copy['__score']  = classified.score;
+      copy['__auto']   = !existingQt;  // true = auto-classified
+      copy['__source'] = f.name;
       allRows.push(copy);
     });
   });
 
-  // Show merge banner
   var banner = document.getElementById('mergeBanner');
-  banner.style.display = 'block';
+  banner.style.display='block';
   banner.innerHTML = '<div class="merge-banner">' +
-    '<div class="merge-info">&#128257; Consolidated from <strong>' + doneFiles.length + ' file(s)</strong> &mdash; <strong>' + allRows.length + ' total rows</strong></div>' +
-    '<button class="btn btn-primary" onclick="runAnalysis()" style="font-size:.82rem;padding:.4rem .9rem">&#9654; Run / Refresh Analysis</button>' +
+    '<div class="merge-info">&#128257; <strong>'+done.length+'</strong> file(s) merged &mdash; <strong>'+allRows.length+'</strong> total rows &mdash; all Query Statements auto-classified</div>' +
+    '<button class="btn btn-primary" onclick="runAnalysis()" style="font-size:.8rem;padding:.38rem .85rem">&#9654; Refresh Analysis</button>' +
     '</div>';
 
-  // Auto-analyze
   setTimeout(runAnalysis, 200);
 }
 
-/* ── Core analysis ── */
-function getCol(row, name) {
-  var key = Object.keys(row).find(function(k){ return k.toLowerCase() === name.toLowerCase(); });
-  return key ? String(row[key] || '').trim() : '';
-}
-
 function runAnalysis() {
-  document.getElementById('alertArea').innerHTML = '';
-  if (!allRows || allRows.length === 0) {
-    document.getElementById('alertArea').innerHTML =
-      '<div class="alert-warn">&#9888; No data rows found. Check your file headers.</div>';
+  document.getElementById('alertArea').innerHTML='';
+  if (!allRows.length) {
+    document.getElementById('alertArea').innerHTML='<div class="alert-warn">&#9888; No data found. Check file headers.</div>';
     return;
   }
 
+  /* ── Group by Query Type ── */
   var groups = {};
   allRows.forEach(function(r) {
-    var qt = getCol(r,'Query Type') || 'Unclassified';
-    if (!groups[qt]) {
-      groups[qt] = { count:0, open:0, closed:0, ages:[], stmts:[], campaigns:[], sources:[] };
-    }
+    var qt = r['__qt'] || 'Unclassified';
+    var sq = r['__sq'] || 'Unknown';
+    if (!groups[qt]) groups[qt]={count:0,open:0,closed:0,ages:[],stmts:[],campaigns:[],sources:[],subGroups:{}};
     groups[qt].count++;
     var st = getCol(r,'Status').toLowerCase();
-    if (st === 'open') { groups[qt].open++; }
-    else if (st === 'closed' || st === 'resolved') { groups[qt].closed++; }
+    if (st==='open') groups[qt].open++;
+    else if (st==='closed'||st==='resolved') groups[qt].closed++;
     var age = parseFloat(getCol(r,'Age'));
-    if (!isNaN(age)) { groups[qt].ages.push(age); }
+    if (!isNaN(age)) groups[qt].ages.push(age);
     var stmt = getCol(r,'Query Statement');
-    if (stmt) { groups[qt].stmts.push(stmt); }
+    if (stmt) groups[qt].stmts.push(stmt);
     var camp = getCol(r,'Campaign Name');
-    if (camp && groups[qt].campaigns.indexOf(camp) === -1) { groups[qt].campaigns.push(camp); }
-    var src = r['__source__'] || '';
-    if (src && groups[qt].sources.indexOf(src) === -1) { groups[qt].sources.push(src); }
+    if (camp && groups[qt].campaigns.indexOf(camp)===-1) groups[qt].campaigns.push(camp);
+    var src = r['__source']||'';
+    if (src && groups[qt].sources.indexOf(src)===-1) groups[qt].sources.push(src);
+    // Sub group
+    if (!groups[qt].subGroups[sq]) groups[qt].subGroups[sq]={count:0,open:0,closed:0,confs:[],stmts:[]};
+    groups[qt].subGroups[sq].count++;
+    if (st==='open') groups[qt].subGroups[sq].open++;
+    else if (st==='closed'||st==='resolved') groups[qt].subGroups[sq].closed++;
+    groups[qt].subGroups[sq].confs.push(r['__conf']||'low');
+    var sqStmt = getCol(r,'Query Statement');
+    if (sqStmt) groups[qt].subGroups[sq].stmts.push(sqStmt);
   });
 
   var total = allRows.length;
   analysis = Object.keys(groups)
-    .sort(function(a,b){ return groups[b].count - groups[a].count; })
-    .map(function(qt, i) {
+    .sort(function(a,b){return groups[b].count-groups[a].count;})
+    .map(function(qt,i) {
       var d = groups[qt];
-      var avgAge = d.ages.length
-        ? (d.ages.reduce(function(a,b){ return a+b; },0) / d.ages.length).toFixed(1)
-        : '-';
-      var uniq = d.stmts.filter(function(v,idx,arr){ return arr.indexOf(v)===idx; });
-      var pct  = ((d.count / total) * 100).toFixed(1);
-      return {
-        qt: qt,
-        count: d.count, pct: pct, open: d.open, closed: d.closed,
-        avgAge: avgAge,
-        campaigns: d.campaigns.join(', ') || '-',
-        sources: d.sources,
-        summary: makeSummary(qt, uniq, d.count, d.open),
-        stmts: uniq
-      };
+      var avgAge = d.ages.length ? (d.ages.reduce(function(a,b){return a+b;},0)/d.ages.length).toFixed(1) : '-';
+      var uniq = d.stmts.filter(function(v,idx,arr){return arr.indexOf(v)===idx;});
+      var pct = ((d.count/total)*100).toFixed(1);
+      var subs = Object.keys(d.subGroups).sort(function(a,b){return d.subGroups[b].count-d.subGroups[a].count;});
+      return {qt:qt, count:d.count, pct:pct, open:d.open, closed:d.closed, avgAge:avgAge,
+              campaigns:d.campaigns.join(', ')||'-', sources:d.sources, stmts:uniq,
+              summary:makeSummary(qt,uniq,d.count,d.open,d.subGroups,subs),
+              subGroups:d.subGroups, subs:subs};
     });
 
-  var totalOpen   = analysis.reduce(function(a,b){ return a+b.open; }, 0);
-  var totalClosed = analysis.reduce(function(a,b){ return a+b.closed; }, 0);
-  var topQt = analysis[0] || { qt:'-', count:0 };
-  var doneFiles = fileList.filter(function(f){ return f.status==='done'; });
+  /* ── Sub query flat list ── */
+  subAnalysis = [];
+  analysis.forEach(function(a,i) {
+    a.subs.forEach(function(sq) {
+      var sg = a.subGroups[sq];
+      var highConf = sg.confs.filter(function(c){return c==='high';}).length;
+      var avgConf = highConf/sg.confs.length > 0.6 ? 'high' : highConf/sg.confs.length > 0.3 ? 'medium' : 'low';
+      var pctOfType = ((sg.count/a.count)*100).toFixed(1);
+      subAnalysis.push({qt:a.qt, sq:sq, count:sg.count, pctOfType:pctOfType, open:sg.open, closed:sg.closed, avgConf:avgConf, qtIdx:i, stmts:sg.stmts||[]});
+    });
+  });
 
-  /* Stats */
+  var totalOpen   = analysis.reduce(function(a,b){return a+b.open;},0);
+  var totalClosed = analysis.reduce(function(a,b){return a+b.closed;},0);
+  var done = fileList.filter(function(f){return f.status==='done';});
+  var highConf = allRows.filter(function(r){return r['__conf']==='high';}).length;
+  var confPct = total ? Math.round(highConf/total*100) : 0;
+
+  /* ── Stats ── */
   document.getElementById('statsGrid').innerHTML =
-    mkStat('Files Merged',   doneFiles.length, 'var(--accent2)', 'data sources')  +
-    mkStat('Total Tickets',  total,            'var(--accent)',  'across all files') +
-    mkStat('Query Types',    analysis.length,  '#818cf8',        'unique categories') +
-    mkStat('Open',           totalOpen,        'var(--warn)',    'awaiting resolution') +
-    mkStat('Closed',         totalClosed,      'var(--success)', 'resolved tickets') +
-    mkStat('Top Category',   topQt.qt,         'var(--text)',    topQt.count+' tickets', true);
+    mkStat('Files Merged',    done.length,      'var(--accent2)', 'data sources') +
+    mkStat('Total Tickets',   total,            'var(--accent)',  'across all files') +
+    mkStat('Query Types',     analysis.length,  '#818cf8',        'auto-classified') +
+    mkStat('Open',            totalOpen,        'var(--warn)',    'pending resolution') +
+    mkStat('Closed',          totalClosed,      'var(--success)', 'resolved') +
+    mkStat('High Confidence', confPct+'%',      '#34d399',        'classification accuracy', true);
 
-  /* Source files line */
+  /* ── Source files line ── */
   document.getElementById('sourceFilesLine').innerHTML =
-    '<div style="font-size:.78rem;color:var(--text3);margin-bottom:.3rem">Source files included:</div>' +
+    '<div style="font-size:.78rem;color:var(--text3);margin-bottom:.35rem">Source files:</div>' +
     '<div class="source-chips">' +
-      doneFiles.map(function(f){
-        return '<span class="source-chip">&#128196; '+esc(f.name)+' ('+f.rowCount+' rows)</span>';
-      }).join('') +
+      done.map(function(f){return '<span class="chip">&#128196; '+esc(f.name)+' ('+f.rowCount+' rows)</span>';}).join('') +
     '</div>';
 
-  /* Summary table */
-  document.getElementById('summaryBody').innerHTML = analysis.map(function(r,i) {
-    var srcChips = r.sources.map(function(s){
-      return '<span style="font-size:.68rem;background:#0f2035;border:1px solid #1e3a5f;color:#7dd3fc;border-radius:4px;padding:.1rem .4rem;display:inline-block;margin:.1rem">'
-        + esc(s) + '</span>';
-    }).join('');
+  /* ── Summary table — one row per Sub Query Type, Consolidated Summary spans all sub rows ── */
+  var summaryRows = [];
+  var globalRowNum = 0;
+  analysis.forEach(function(r, i) {
+    var subCount = Math.max(r.subs.length, 1);
+    r.subs.forEach(function(sq, si) {
+      globalRowNum++;
+      var sg = r.subGroups[sq];
+      var isFirst = si === 0;
+      var sqPct = r.count > 0 ? ((sg.count / r.count) * 100).toFixed(0) : 0;
+
+      // Left spanning cells — only on first sub row
+      var leftCells = isFirst
+        ? '<td rowspan="'+subCount+'" style="color:var(--text3);vertical-align:middle;border-right:1px solid #334155;font-size:.75rem;text-align:center">'+globalRowNum+'</td>' +
+          '<td rowspan="'+subCount+'" style="font-size:.75rem;color:var(--text2);vertical-align:middle;border-right:1px solid #334155">'+esc(r.campaigns)+'</td>' +
+          '<td rowspan="'+subCount+'" style="vertical-align:middle;border-right:1px solid #334155;white-space:nowrap"><span class="badge '+BADGE_CLS[i%10]+'">'+esc(r.qt)+'</span></td>' +
+          '<td rowspan="'+subCount+'" style="font-weight:800;color:var(--accent);vertical-align:middle;text-align:center;border-right:1px solid #334155">'+r.count+'</td>' +
+          '<td rowspan="'+subCount+'" style="vertical-align:middle;border-right:1px solid #334155;text-align:center">'+r.pct+'%<div class="progress" style="margin-top:.3rem"><div class="progress-fill" style="width:'+r.pct+'%"></div></div></td>'
+        : '';
+
+      // Right spanning cell — Consolidated Summary — only on first sub row
+      var summaryCell = isFirst
+        ? '<td rowspan="'+subCount+'" style="vertical-align:top;padding:.75rem 1rem;min-width:220px;max-width:300px;border-left:1px solid #1e3a5f;background:#080f1e">' +
+            vocSummaryCell(r) +
+          '</td>'
+        : '';
+
+      summaryRows.push(
+        '<tr class="'+(si===subCount-1?'qt-last-sub':'')+'">' +
+        leftCells +
+        '<td style="font-size:.78rem;vertical-align:middle;border-right:1px solid #1e293b">' +
+          '<span class="chip-sq">'+esc(sq)+'</span>' +
+          '<span style="font-size:.65rem;color:var(--text3);display:block;margin-top:.2rem">'+sqPct+'% of type</span>' +
+        '</td>' +
+        '<td style="font-weight:700;color:var(--accent2);text-align:center;vertical-align:middle;border-right:1px solid #1e293b">'+sg.count+'</td>' +
+        summaryCell +
+        '</tr>'
+      );
+    });
+    // No sub groups — single row
+    if (r.subs.length === 0) {
+      globalRowNum++;
+      summaryRows.push(
+        '<tr class="qt-last-sub">' +
+        '<td style="color:var(--text3);font-size:.75rem;text-align:center">'+globalRowNum+'</td>' +
+        '<td style="font-size:.75rem;color:var(--text2)">'+esc(r.campaigns)+'</td>' +
+        '<td><span class="badge '+BADGE_CLS[i%10]+'">'+esc(r.qt)+'</span></td>' +
+        '<td style="font-weight:800;color:var(--accent);text-align:center">'+r.count+'</td>' +
+        '<td style="text-align:center">'+r.pct+'%</td>' +
+        '<td style="color:var(--text3);font-size:.75rem">—</td>' +
+        '<td style="color:var(--text3);text-align:center">—</td>' +
+        '<td style="padding:.75rem 1rem;min-width:220px;background:#080f1e;border-left:1px solid #1e3a5f">'+vocSummaryCell(r)+'</td>' +
+        '</tr>'
+      );
+    }
+  });
+  document.getElementById('summaryBody').innerHTML = summaryRows.join('');
+
+  /* ── Sub query table ── */
+  document.getElementById('subqueryBody').innerHTML = subAnalysis.map(function(r,i) {
+    var confClass = r.avgConf==='high'?'match-high':r.avgConf==='medium'?'match-med':'match-low';
+    var confLabel = r.avgConf==='high'?'&#9679; High':r.avgConf==='medium'?'&#9679; Medium':'&#9679; Low';
+    var vocText = makeSubSummary(r.sq, r.stmts||[], r.count, r.open);
     return '<tr>' +
-      '<td style="color:var(--text3)">' + (i+1) + '</td>' +
-      '<td style="font-size:.78rem;color:var(--text2)">' + esc(r.campaigns) + '</td>' +
-      '<td><span class="badge ' + BADGE_CLS[i%8] + '">' + esc(r.qt) + '</span></td>' +
-      '<td style="font-weight:800;color:var(--accent)">' + r.count + '</td>' +
-      '<td><span>' + r.pct + '%</span><div class="progress"><div class="progress-fill" style="width:'+r.pct+'%"></div></div></td>' +
-      '<td style="color:var(--warn)">' + r.open + '</td>' +
-      '<td style="color:var(--success)">' + r.closed + '</td>' +
-      '<td>' + r.avgAge + '</td>' +
-      '<td>' + (srcChips||'-') + '</td>' +
-      '<td style="font-size:.78rem;color:var(--text2);max-width:230px;line-height:1.5">' + esc(r.summary) + '</td>' +
+      '<td style="color:var(--text3)">'+(i+1)+'</td>' +
+      '<td><span class="badge '+BADGE_CLS[r.qtIdx%10]+'">'+esc(r.qt)+'</span></td>' +
+      '<td style="font-size:.78rem;color:var(--accent2)">'+esc(r.sq)+'</td>' +
+      '<td style="font-weight:800;color:var(--accent);text-align:center">'+r.count+'</td>' +
+      '<td style="text-align:center">'+r.pctOfType+'%</td>' +
+      '<td><span class="chip-match '+confClass+'">'+confLabel+'</span></td>' +
+      '<td style="font-size:.78rem;color:#cbd5e1;line-height:1.6;max-width:320px">'+esc(vocText)+'</td>' +
       '</tr>';
   }).join('');
 
-  /* Chart */
-  var maxCount = analysis[0] ? analysis[0].count : 1;
+  /* ── Chart ── */
+  var maxCount = analysis[0]?analysis[0].count:1;
   document.getElementById('chartArea').innerHTML = analysis.map(function(r,i) {
-    var w = (r.count / maxCount * 100).toFixed(1);
+    var w = (r.count/maxCount*100).toFixed(1);
     return '<div class="bar-row">' +
-      '<div class="bar-label" title="'+esc(r.campaigns+' | '+r.qt)+'">' +
-        esc(r.qt) +
-        '<div style="font-size:.63rem;color:var(--text3);margin-top:1px">'+esc(r.campaigns)+'</div>' +
-      '</div>' +
-      '<div class="bar-track">' +
-        '<div class="bar-fill '+BAR_CLS[i%8]+'" style="width:'+w+'%;min-width:'+(r.count>0?'28px':'0')+'">'+r.count+'</div>' +
-      '</div>' +
-      '<div style="font-size:.73rem;color:var(--text3);min-width:38px;text-align:right">'+r.pct+'%</div>' +
+      '<div class="bar-label" title="'+esc(r.qt)+'">'+esc(r.qt)+
+        '<div style="font-size:.62rem;color:var(--text3)">'+esc(r.campaigns)+'</div></div>' +
+      '<div class="bar-track"><div class="bar-fill '+BAR_CLS[i%10]+'" style="width:'+w+'%;min-width:'+(r.count>0?'28px':'0')+'">'+r.count+'</div></div>' +
+      '<div style="font-size:.7rem;color:var(--text3);min-width:36px;text-align:right">'+r.pct+'%</div>' +
       '</div>';
   }).join('');
 
-  /* Detail */
+  /* ── Detail ── */
   document.getElementById('detailArea').innerHTML = analysis.map(function(r,i) {
-    var srcLine = r.sources.length
-      ? '<div style="font-size:.72rem;color:var(--text3);margin-top:.4rem">Files: ' +
-          r.sources.map(function(s){ return '<span class="source-chip">'+esc(s)+'</span>'; }).join(' ') +
-        '</div>'
-      : '';
+    var subRows = r.subs.map(function(sq) {
+      var sg = r.subGroups[sq];
+      var hi = sg.confs.filter(function(c){return c==='high';}).length;
+      var conf = hi/sg.confs.length>0.6?'match-high':hi/sg.confs.length>0.3?'match-med':'match-low';
+      var confLabel = hi/sg.confs.length>0.6?'High':hi/sg.confs.length>0.3?'Medium':'Low';
+      var sqPct = r.count > 0 ? ((sg.count/r.count)*100).toFixed(0) : 0;
+      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
+      return '<div style="padding:.6rem 0;border-bottom:1px solid #1a2540">' +
+        '<div style="display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.35rem">' +
+          '<span class="chip-sq">'+esc(sq)+'</span>' +
+          '<span style="font-weight:700;color:var(--accent)">'+sg.count+' tickets</span>' +
+          '<span style="font-size:.7rem;color:var(--text3)">'+sqPct+'% of type</span>' +
+          '<span style="font-size:.7rem;color:var(--warn)">Open: '+sg.open+'</span>' +
+          '<span style="font-size:.7rem;color:var(--success)">Closed: '+sg.closed+'</span>' +
+          '<span class="chip-match '+conf+'" style="margin-left:auto;font-size:.68rem">'+confLabel+' confidence</span>' +
+        '</div>' +
+        '<div style="font-size:.78rem;color:#94a3b8;line-height:1.6;background:#0a1525;border-left:2px solid #818cf8;padding:.5rem .75rem;border-radius:0 5px 5px 0">'+esc(subVoC)+'</div>' +
+        '</div>';
+    }).join('');
     return '<div class="detail-block">' +
-      '<div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-bottom:.6rem">' +
-        '<span style="font-size:.75rem;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:.2rem .6rem">' + esc(r.campaigns) + '</span>' +
-        '<span class="badge '+BADGE_CLS[i%8]+'" style="font-size:.82rem;padding:.3rem .85rem">' + esc(r.qt) + '</span>' +
-        '<strong style="color:var(--accent)">' + r.count + ' tickets</strong>' +
-        '<span style="color:var(--text3);font-size:.8rem">' + r.pct + '%</span>' +
-        '<span style="margin-left:auto;font-size:.78rem;color:var(--text3)">Open: <span style="color:var(--warn)">'+r.open+'</span> &bull; Closed: <span style="color:var(--success)">'+r.closed+'</span> &bull; Avg Age: '+r.avgAge+'</span>' +
+      '<div style="display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-bottom:.6rem">' +
+        '<span style="font-size:.73rem;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:5px;padding:.18rem .55rem">'+esc(r.campaigns)+'</span>' +
+        '<span class="badge '+BADGE_CLS[i%10]+'" style="font-size:.8rem;padding:.28rem .8rem">'+esc(r.qt)+'</span>' +
+        '<strong style="color:var(--accent)">'+r.count+' tickets</strong>' +
+        '<span style="color:var(--text3);font-size:.78rem">'+r.pct+'%</span>' +
+        '<span style="margin-left:auto;font-size:.76rem;color:var(--text3)">Open: <span style="color:var(--warn)">'+r.open+'</span> &bull; Closed: <span style="color:var(--success)">'+r.closed+'</span> &bull; Avg Age: '+r.avgAge+'</span>' +
       '</div>' +
-      '<div class="summary-text"><strong style="color:var(--accent)">Consolidated Summary:</strong> ' + esc(r.summary) + '</div>' +
-      srcLine +
+      '<div class="summary-text"><strong style="color:var(--accent)">&#128172; Voice of Customer:</strong> '+esc(r.summary)+'</div>' +
+      '<div style="font-size:.75rem;color:var(--text3);margin:.5rem 0 .3rem;font-weight:600">Sub Query Types:</div>' +
+      subRows +
       '</div>';
   }).join('');
 
-  document.getElementById('results').style.display = 'block';
-  document.getElementById('results').scrollIntoView({ behavior:'smooth', block:'start' });
+  /* ── Classified raw data table ── */
+  var rawCols = ['Ticket ID','Campaign Name','Candidate Name','Query Statement','Query Type (Original)','Auto Query Type','Sub Query Type','Confidence','Status','Source File'];
+  document.getElementById('rawHead').innerHTML = rawCols.map(function(c){return '<th>'+esc(c)+'</th>';}).join('');
+  document.getElementById('rawBody').innerHTML = allRows.map(function(r) {
+    var confClass = r['__conf']==='high'?'match-high':r['__conf']==='medium'?'match-med':'match-low';
+    var origQt = getCol(r,'Query Type');
+    return '<tr>' +
+      '<td>'+esc(getCol(r,'Ticket ID'))+'</td>' +
+      '<td>'+esc(getCol(r,'Campaign Name'))+'</td>' +
+      '<td>'+esc(getCol(r,'Candidate Name'))+'</td>' +
+      '<td style="max-width:180px;white-space:normal;font-size:.75rem;color:var(--text2)">'+esc(getCol(r,'Query Statement'))+'</td>' +
+      '<td style="font-size:.75rem;color:var(--text3)">'+esc(origQt||'—')+'</td>' +
+      '<td><span class="badge '+BADGE_CLS[(analysis.findIndex(function(a){return a.qt===r['__qt'];})||0)%10]+'">'+esc(r['__qt'])+'</span></td>' +
+      '<td><span class="chip-sq">'+esc(r['__sq'])+'</span></td>' +
+      '<td><span class="chip-match '+confClass+'">'+r['__conf']+'</span></td>' +
+      '<td>'+esc(getCol(r,'Status'))+'</td>' +
+      '<td style="font-size:.72rem;color:var(--text3)">'+esc(r['__source']||'')+'</td>' +
+      '</tr>';
+  }).join('');
+
+  document.getElementById('results').style.display='block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ── Summary builder ── */
-function makeSummary(qt, stmts, count, open) {
-  var closed = count - open;
-  var statusNote = open === 0
-    ? 'All ' + count + ' ticket(s) have been resolved.'
-    : closed > 0
-      ? closed + ' ticket(s) resolved, ' + open + ' still pending resolution.'
-      : 'All ' + count + ' ticket(s) are currently open and pending resolution.';
+/* ═══════════════════════════════════════════════
+   VOICE OF CUSTOMER SUMMARY BUILDER
+   Generates a narrative that describes exactly what
+   customers are saying most frequently.
+═══════════════════════════════════════════════ */
 
-  if (!stmts.length) {
-    return 'A total of ' + count + ' ticket(s) were raised under "' + qt + '". ' + statusNote;
-  }
-
-  var cleaned = stmts.map(function(s){ return s.trim(); }).filter(function(s){ return s.length > 0; });
-
-  var phraseFreq = {};
-  cleaned.forEach(function(s) {
-    var words = s.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(function(w){ return w.length > 2; });
-    for (var i = 0; i < words.length - 1; i++) {
-      var phrase = words[i] + ' ' + words[i+1];
-      phraseFreq[phrase] = (phraseFreq[phrase] || 0) + 1;
+/* Returns top N actual customer statements by frequency */
+function topActualStatements(stmts, n) {
+  // Count exact statement occurrences
+  var freq = {};
+  stmts.forEach(function(s) {
+    var key = s.trim().toLowerCase();
+    freq[key] = (freq[key] || 0) + 1;
+  });
+  // Sort by frequency, return original casing of first occurrence
+  var seen = {};
+  var ranked = [];
+  stmts.forEach(function(s) {
+    var key = s.trim().toLowerCase();
+    if (!seen[key]) {
+      seen[key] = true;
+      ranked.push({ stmt: s.trim(), count: freq[key] });
     }
   });
+  ranked.sort(function(a, b) { return b.count - a.count; });
+  return ranked.slice(0, n);
+}
 
-  var topPhrases = Object.keys(phraseFreq)
-    .filter(function(p){ return phraseFreq[p] > 1; })
-    .sort(function(a,b){ return phraseFreq[b] - phraseFreq[a]; })
-    .slice(0, 3);
+/* Build a short VoC sentence from a statement */
+function vocSentence(stmt, count, total) {
+  var s = stmt.charAt(0).toUpperCase() + stmt.slice(1).replace(/[.!?]+$/, '');
+  var pct = total > 0 ? Math.round(count / total * 100) : 0;
+  var freqNote = count > 1 ? ' (raised '+count+' times, '+pct+'%)' : '';
+  return s + freqNote;
+}
 
-  var issueSummary = '';
-  if (cleaned.length === 1) {
-    issueSummary = cleaned[0];
-  } else if (topPhrases.length > 0) {
-    issueSummary = 'Candidates reported issues related to ' + topPhrases.join(', ') +
-      ', among other ' + qt.toLowerCase() + '-related concerns';
-  } else {
-    var picks = cleaned.slice(0, 3).map(function(s){
-      return s.charAt(0).toLowerCase() + s.slice(1).replace(/[.?!]+$/,'');
-    });
-    issueSummary = 'Issues raised include: ' + picks.join('; ');
+/* ── makeSummary: pure Voice of Customer — what customers say most ── */
+function makeSummary(qt, stmts, count, open, subGroups, subs) {
+  if (!stmts.length) {
+    return 'No query statements recorded for ' + count + ' ticket(s) under "' + qt + '".';
   }
 
-  return 'A total of ' + count + ' ticket(s) were raised under "' + qt + '". ' +
-    issueSummary + '. ' + statusNote;
+  var dominantSQ = subs && subs.length > 0 ? subs[0] : null;
+  var dominantSG = dominantSQ && subGroups ? subGroups[dominantSQ] : null;
+
+  // Use dominant sub group stmts for most relevant voice, fallback to all stmts
+  var srcStmts = (dominantSG && dominantSG.stmts && dominantSG.stmts.length)
+    ? dominantSG.stmts : stmts;
+  var topStmts = topActualStatements(srcStmts, 2);
+  var voc = '';
+
+  // Lead: dominant sub category context
+  if (dominantSQ && dominantSG) {
+    var sqPct = Math.round(dominantSG.count / count * 100);
+    voc += sqPct + '% of ' + count + ' customers are primarily facing issues with "' + dominantSQ + '". ';
+  }
+
+  // Primary customer voice from actual statement
+  if (topStmts.length > 0) {
+    var t1 = topStmts[0];
+    var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
+    voc += 'Customers are reporting that ' + s1 + '. ';
+  }
+
+  // Second sub group voice
+  if (subs && subs.length > 1) {
+    var secondSQ = subs[1];
+    var secondSG = subGroups ? subGroups[secondSQ] : null;
+    if (secondSG && secondSG.stmts && secondSG.stmts.length) {
+      var t2 = topActualStatements(secondSG.stmts, 1)[0];
+      var pct2 = Math.round(secondSG.count / count * 100);
+      var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
+      voc += pct2 + '% also report that ' + s2 + '. ';
+    }
+  } else if (topStmts.length > 1) {
+    var t2b = topStmts[1];
+    var s2b = t2b.stmt.charAt(0).toLowerCase() + t2b.stmt.slice(1).replace(/[.!?]+$/, '');
+    voc += 'Some also mention that ' + s2b + '. ';
+  }
+
+  return voc.trim();
 }
 
-/* ── UI helpers ── */
+/* ── makeSubSummary: descriptive paragraph for sub query type ── */
+function makeSubSummary(sq, stmts, count, open) {
+  if (!stmts || !stmts.length) {
+    return count + ' ticket(s) raised under "' + sq + '". Customers are experiencing issues related to ' + sq.toLowerCase() + '.';
+  }
+  var top = topActualStatements(stmts, 2);
+  var t1 = top[0];
+  var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
+  var voc = 'Customers are reporting that ' + s1 + '.';
+  if (top.length > 1) {
+    var t2 = top[1];
+    var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
+    voc += ' Some also report that ' + s2 + '.';
+  }
+  return voc;
+}
+
+/* ── vocSummaryCell: descriptive consolidated paragraph for the summary table ── */
+function vocSummaryCell(r) {
+  if (!r.stmts || !r.stmts.length) {
+    return '<span style="color:var(--text3);font-size:.75rem">No statements recorded</span>';
+  }
+
+  // Use taxonomy sub query grouping to describe what customers say
+  // Build a short paragraph from the dominant sub query type + top statements
+  var dominantSQ = r.subs && r.subs.length > 0 ? r.subs[0] : null;
+  var dominantSG = dominantSQ ? r.subGroups[dominantSQ] : null;
+
+  // Get top statements from dominant sub group first, then overall
+  var srcStmts = (dominantSG && dominantSG.stmts && dominantSG.stmts.length)
+    ? dominantSG.stmts
+    : r.stmts;
+
+  var topStmts = topActualStatements(srcStmts, 2);
+  var topAll   = topActualStatements(r.stmts, 3);
+
+  // Build narrative paragraph
+  var para = '';
+
+  // Lead sentence: describe what the majority is facing
+  if (dominantSQ && dominantSG) {
+    var sqPct = Math.round(dominantSG.count / r.count * 100);
+    para += sqPct + '% of customers are facing issues with <strong style="color:var(--accent2)">' + esc(dominantSQ) + '</strong>. ';
+  }
+
+  // Add the most common actual statement as the primary customer voice
+  if (topStmts.length > 0) {
+    var t1 = topStmts[0];
+    var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
+    para += 'Primarily, customers are reporting that <em style="color:#cbd5e1">' + esc(s1) + '</em>. ';
+  }
+
+  // Add second issue if present in the overall list and different sub group
+  if (r.subs && r.subs.length > 1) {
+    var secondSQ = r.subs[1];
+    var secondSG = r.subGroups[secondSQ];
+    if (secondSG && secondSG.stmts && secondSG.stmts.length) {
+      var t2 = topActualStatements(secondSG.stmts, 1)[0];
+      var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
+      var sqPct2 = Math.round(secondSG.count / r.count * 100);
+      para += sqPct2 + '% also report that <em style="color:#cbd5e1">' + esc(s2) + '</em>. ';
+    }
+  } else if (topAll.length > 1 && topAll[1].stmt !== (topStmts[0] ? topStmts[0].stmt : '')) {
+    var t2b = topAll[1];
+    var s2b = t2b.stmt.charAt(0).toLowerCase() + t2b.stmt.slice(1).replace(/[.!?]+$/, '');
+    para += 'Some also report that <em style="color:#cbd5e1">' + esc(s2b) + '</em>. ';
+  }
+
+  // Close with total count context
+  para += 'Total <strong style="color:var(--accent)">' + r.count + '</strong> ticket(s) under this category.';
+
+  return '<div style="font-size:.78rem;line-height:1.7;color:#94a3b8">' + para + '</div>';
+}
+
+/* ═══════════════════════════════════════════════
+   UI HELPERS
+═══════════════════════════════════════════════ */
 function showTab(name, el) {
-  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   el.classList.add('active');
-  ['summary','chart','detail'].forEach(function(t){
-    document.getElementById('tab-'+t).style.display = (t===name) ? 'block' : 'none';
+  ['summary','subquery','chart','detail','rawdata'].forEach(function(t){
+    document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';
   });
 }
-
-function mkStat(label, value, color, sub, small) {
-  var fs = small ? 'font-size:.95rem;padding-top:.4rem;' : '';
-  return '<div class="stat-card">' +
-    '<div class="stat-label">' + label + '</div>' +
-    '<div class="stat-value" style="' + fs + 'color:' + color + '">' + esc(String(value)) + '</div>' +
-    '<div class="stat-sub">' + sub + '</div>' +
-    '</div>';
+function mkStat(label,value,color,sub,small){
+  var fs=small?'font-size:.95rem;padding-top:.35rem;':'';
+  return '<div class="stat-card"><div class="stat-label">'+label+'</div><div class="stat-value" style="'+fs+'color:'+color+'">'+esc(String(value))+'</div><div class="stat-sub">'+sub+'</div></div>';
 }
 
-/* ── Sample downloads ── */
+/* ═══════════════════════════════════════════════
+   SAMPLE DOWNLOADS
+═══════════════════════════════════════════════ */
 function downloadSampleCSV() {
-  var csv = SAMPLE.map(function(r){
-    return r.map(function(c){ return '"' + String(c).replace(/"/g,'""') + '"'; }).join(',');
-  }).join('\n');
-  triggerDL(new Blob([csv],{type:'text/csv'}), 'sample_query_data.csv');
+  var csv=SAMPLE.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  triggerDL(new Blob([csv],{type:'text/csv'}),'sample_query_data.csv');
 }
 function downloadSampleXLSX() {
-  var wb = XLSX.utils.book_new();
-  var ws = XLSX.utils.aoa_to_sheet(SAMPLE);
-  ws['!cols'] = HEADERS.map(function(){ return {wch:22}; });
-  XLSX.utils.book_append_sheet(wb, ws, 'Query Data');
-  XLSX.writeFile(wb, 'sample_query_data.xlsx');
+  var wb=XLSX.utils.book_new();
+  var ws=XLSX.utils.aoa_to_sheet(SAMPLE);
+  ws['!cols']=HEADERS.map(function(){return{wch:22};});
+  XLSX.utils.book_append_sheet(wb,ws,'Query Data');
+  XLSX.writeFile(wb,'sample_query_data.xlsx');
 }
 
-/* ── Export ── */
-function exportXLSX() {
+/* ═══════════════════════════════════════════════
+   EXPORT A — Corrected Original File
+   Original columns + Auto Query Type + Sub Query Type
+═══════════════════════════════════════════════ */
+function buildCorrectedRows() {
+  // Gather all original column keys (excluding internal __ keys)
+  var keysSet = [];
+  allRows.forEach(function(r) {
+    Object.keys(r).forEach(function(k) {
+      if (k.indexOf('__') !== 0 && keysSet.indexOf(k) === -1) keysSet.push(k);
+    });
+  });
+  // Ensure standard HEADERS order where possible
+  var orderedKeys = [];
+  HEADERS.forEach(function(h) { if (keysSet.indexOf(h) !== -1) orderedKeys.push(h); });
+  keysSet.forEach(function(k) { if (orderedKeys.indexOf(k) === -1) orderedKeys.push(k); });
+  // Add the two new columns
+  var outCols = orderedKeys.concat(['Auto Query Type', 'Sub Query Type', 'Classification Confidence', 'Source File']);
+  var outRows = [outCols].concat(allRows.map(function(r) {
+    return orderedKeys.map(function(k) { return r[k] !== undefined ? r[k] : ''; })
+      .concat([r['__qt'] || '', r['__sq'] || '', r['__conf'] || '', r['__source'] || '']);
+  }));
+  return { cols: outCols, rows: outRows };
+}
+
+function exportCorrectedXLSX() {
+  if (!allRows.length) return;
+  var wb = XLSX.utils.book_new();
+  // One sheet per source file
+  var doneFiles = fileList.filter(function(f) { return f.status === 'done'; });
+  doneFiles.forEach(function(f) {
+    if (!f.rows.length) return;
+    var keys = [];
+    f.rows.forEach(function(r) { Object.keys(r).forEach(function(k) { if (keys.indexOf(k) === -1) keys.push(k); }); });
+    var orderedKeys = [];
+    HEADERS.forEach(function(h) { if (keys.indexOf(h) !== -1) orderedKeys.push(h); });
+    keys.forEach(function(k) { if (orderedKeys.indexOf(k) === -1) orderedKeys.push(k); });
+    var outCols = orderedKeys.concat(['Auto Query Type', 'Sub Query Type', 'Classification Confidence']);
+    // Get enriched rows for this file
+    var fileRows = allRows.filter(function(r) { return r['__source'] === f.name; });
+    var sheetData = [outCols].concat(fileRows.map(function(r) {
+      return orderedKeys.map(function(k) { return r[k] !== undefined ? r[k] : ''; })
+        .concat([r['__qt'] || '', r['__sq'] || '', r['__conf'] || '']);
+    }));
+    var ws = XLSX.utils.aoa_to_sheet(sheetData);
+    ws['!cols'] = outCols.map(function() { return { wch: 22 }; });
+    var sheetName = f.name.replace(/\.[^.]+$/, '').substring(0, 31);
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+  });
+  // If multiple files, also add a combined sheet
+  if (doneFiles.length > 1) {
+    var combined = buildCorrectedRows();
+    var wsAll = XLSX.utils.aoa_to_sheet(combined.rows);
+    wsAll['!cols'] = combined.cols.map(function() { return { wch: 22 }; });
+    XLSX.utils.book_append_sheet(wb, wsAll, 'All Files Combined');
+  }
+  XLSX.writeFile(wb, 'corrected_original_data.xlsx');
+}
+
+function exportCorrectedCSV() {
+  if (!allRows.length) return;
+  var combined = buildCorrectedRows();
+  var csv = combined.rows.map(function(row) {
+    return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  triggerDL(new Blob([csv], { type: 'text/csv' }), 'corrected_original_data.csv');
+}
+
+/* ═══════════════════════════════════════════════
+   EXPORT B — Consolidated Summary Report
+   Query Type + each Sub Query Type on its own row
+═══════════════════════════════════════════════ */
+function exportSummaryXLSX() {
   if (!analysis.length) return;
   var wb = XLSX.utils.book_new();
 
-  // Sheet 1: Consolidated Summary
-  var summaryData = [['#','Campaign Name','Query Type','Count','% Share','Open','Closed','Avg Age (days)','Source Files','Consolidated Summary']];
-  analysis.forEach(function(r,i) {
-    summaryData.push([i+1, r.campaigns, r.qt, r.count, r.pct+'%', r.open, r.closed, r.avgAge, r.sources.join(', '), r.summary]);
+  // Sheet 1: Summary — one row per sub query type
+  var s1 = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Source Files', 'Voice of Customer Summary']];
+  var rowNum = 0;
+  analysis.forEach(function(r) {
+    r.subs.forEach(function(sq, si) {
+      rowNum++;
+      var sg = r.subGroups[sq];
+      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
+      s1.push([
+        rowNum, r.campaigns, r.qt,
+        si === 0 ? r.count : '',
+        si === 0 ? r.pct + '%' : '',
+        sq, sg.count,
+        si === 0 ? r.sources.join(', ') : '',
+        subVoC
+      ]);
+    });
+    if (r.subs.length === 0) {
+      rowNum++;
+      s1.push([rowNum, r.campaigns, r.qt, r.count, r.pct + '%', '—', 0, r.sources.join(', '), r.summary]);
+    }
   });
-  var ws1 = XLSX.utils.aoa_to_sheet(summaryData);
-  ws1['!cols'] = [{wch:4},{wch:22},{wch:22},{wch:8},{wch:9},{wch:8},{wch:8},{wch:14},{wch:30},{wch:80}];
-  XLSX.utils.book_append_sheet(wb, ws1, 'Consolidated Summary');
+  var ws1 = XLSX.utils.aoa_to_sheet(s1);
+  ws1['!cols'] = [{wch:4},{wch:20},{wch:22},{wch:12},{wch:9},{wch:35},{wch:10},{wch:30},{wch:100}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Query Summary');
 
-  // Sheet 2: All raw rows with source file column
-  if (allRows.length) {
-    var baseKeys = HEADERS.filter(function(h){ return h !== '__source__'; });
-    var rawHeader = baseKeys.concat(['Source File']);
-    var rawData = [rawHeader].concat(allRows.map(function(r) {
-      return baseKeys.map(function(k){ return r[k] || ''; }).concat([r['__source__'] || '']);
-    }));
-    var ws2 = XLSX.utils.aoa_to_sheet(rawData);
-    ws2['!cols'] = rawHeader.map(function(){ return {wch:20}; });
-    XLSX.utils.book_append_sheet(wb, ws2, 'All Raw Data');
-  }
-
-  // Sheet per source file
-  var doneFiles = fileList.filter(function(f){ return f.status==='done'; });
-  doneFiles.forEach(function(f) {
-    if (!f.rows.length) return;
-    var keys = Object.keys(f.rows[0]).filter(function(k){ return k !== '__source__'; });
-    var sheetData = [keys].concat(f.rows.map(function(r){ return keys.map(function(k){ return r[k]||''; }); }));
-    var sheetName = f.name.replace(/\.[^.]+$/, '').substring(0, 31);
-    var wsF = XLSX.utils.aoa_to_sheet(sheetData);
-    XLSX.utils.book_append_sheet(wb, wsF, sheetName);
+  // Sheet 2: Sub Query Breakdown (flat)
+  var s2 = [['#', 'Query Type', 'Sub Query Type', 'Count', '% of Type', 'Open', 'Closed', 'Confidence']];
+  subAnalysis.forEach(function(r, i) {
+    s2.push([i + 1, r.qt, r.sq, r.count, r.pctOfType + '%', r.avgConf, makeSubSummary(r.sq, r.stmts||[], r.count, r.open)]);
   });
+  var ws2 = XLSX.utils.aoa_to_sheet(s2);
+  ws2['!cols'] = [{wch:4},{wch:22},{wch:35},{wch:8},{wch:10},{wch:14},{wch:100}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Sub Query Breakdown');
 
-  XLSX.writeFile(wb, 'consolidated_query_report.xlsx');
+  XLSX.writeFile(wb, 'consolidated_summary_report.xlsx');
 }
 
 function exportCSV() {
   if (!analysis.length) return;
-  var data = [['#','Campaign Name','Query Type','Count','% Share','Open','Closed','Avg Age','Source Files','Consolidated Summary']].concat(
-    analysis.map(function(r,i) {
-      return [i+1, r.campaigns, r.qt, r.count, r.pct+'%', r.open, r.closed, r.avgAge, r.sources.join(' | '), r.summary];
-    })
-  );
-  var csv = data.map(function(row){
-    return row.map(function(c){ return '"'+String(c).replace(/"/g,'""')+'"'; }).join(',');
+  // One row per sub query type
+  var data = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Voice of Customer Summary']];
+  var rowNum = 0;
+  analysis.forEach(function(r) {
+    r.subs.forEach(function(sq, si) {
+      rowNum++;
+      var sg = r.subGroups[sq];
+      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
+      data.push([rowNum, r.campaigns, r.qt, si === 0 ? r.count : '', si === 0 ? r.pct + '%' : '', sq, sg.count, subVoC]);
+    });
+    if (r.subs.length === 0) {
+      rowNum++;
+      data.push([rowNum, r.campaigns, r.qt, r.count, r.pct + '%', '—', 0, r.summary]);
+    }
+  });
+  var csv = data.map(function(row) {
+    return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
   }).join('\n');
-  triggerDL(new Blob([csv],{type:'text/csv'}), 'consolidated_query_report.csv');
+  triggerDL(new Blob([csv], { type: 'text/csv' }), 'consolidated_summary_report.csv');
 }
 
-function triggerDL(blob, name) {
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = name;
-  a.click();
-  URL.revokeObjectURL(a.href);
-}
-
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function triggerDL(blob,name){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
 </html>
