@@ -127,6 +127,8 @@ tr:hover td{background:#1a2540}
 .alert-warn{padding:.75rem 1rem;border-radius:8px;font-size:.85rem;margin-top:.75rem;background:#422006;border:1px solid #78350f;color:#fde68a}
 footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.75rem;border-top:1px solid var(--border);margin-top:1rem}
 @media(max-width:600px){.header h1{font-size:1.5rem}.app{padding:1rem}.stats-grid{grid-template-columns:1fr 1fr}.bar-label{width:90px}}
+.export-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-top:.25rem}
+@media(max-width:900px){.export-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -172,6 +174,7 @@ footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.7
     <div class="tabs">
       <div class="tab active" onclick="showTab('summary',this)">Summary</div>
       <div class="tab" onclick="showTab('subquery',this)">Sub Query Breakdown</div>
+      <div class="tab" onclick="showTab('campaignreport',this)">Campaign Report</div>
       <div class="tab" onclick="showTab('chart',this)">Chart</div>
       <div class="tab" onclick="showTab('detail',this)">Detail View</div>
       <div class="tab" onclick="showTab('rawdata',this)">Classified Data</div>
@@ -197,9 +200,23 @@ footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.7
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>#</th><th>Query Type</th><th>Sub Query Type</th><th>Count</th><th>% of Type</th><th>Confidence</th><th>Consolidated Summary</th>
+            <th>#</th><th>Query Type</th><th>Sub Query Type</th><th>Count</th><th>% of Type</th><th>Confidence</th><th>Sub Query Detail</th>
           </tr></thead>
           <tbody id="subqueryBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Campaign Report tab -->
+    <div id="tab-campaignreport" class="card" style="display:none">
+      <div class="card-title">Campaign-wise Standardized Report</div>
+      <p style="color:var(--text2);font-size:.8rem;margin-bottom:.85rem">One row per Campaign + Query Type + Sub Query Type combination, with query volume share and the standardized taxonomy statement for that classification.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Sr. No.</th><th>Campaign Name</th><th>Query Count</th><th>Average Query Volume/Percentage</th><th>Query Type</th><th>Sub Query Type</th><th>Standardized Query Statement</th>
+          </tr></thead>
+          <tbody id="campaignReportBody"></tbody>
         </table>
       </div>
     </div>
@@ -231,7 +248,7 @@ footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.7
     <!-- Step 3 -->
     <div class="card">
       <div class="card-title"><span class="step-badge">3</span> Download Reports</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.25rem">
+      <div class="export-grid">
 
         <div style="background:var(--bg3);border:1px solid #1e3a5f;border-radius:var(--radius);padding:1.1rem">
           <div style="font-size:.82rem;font-weight:700;color:var(--accent);margin-bottom:.4rem">&#128196; Corrected Original File</div>
@@ -239,7 +256,7 @@ footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.7
             Your original uploaded data with two new columns added: <strong>Auto Query Type</strong> and <strong>Sub Query Type</strong> (auto-classified from Query Statement). All original columns preserved.
           </p>
           <div class="btn-row">
-            <button class="btn btn-primary" onclick="exportCorrectedXLSX()">&#8659; Download Corrected XLSX</button>
+            <button class="btn btn-primary" onclick="exportCorrectedXLSX()">&#8659; XLSX</button>
             <button class="btn btn-ghost" onclick="exportCorrectedCSV()">&#8659; CSV</button>
           </div>
         </div>
@@ -247,11 +264,22 @@ footer{text-align:center;padding:1.5rem 0 .75rem;color:var(--text3);font-size:.7
         <div style="background:var(--bg3);border:1px solid #064e3b;border-radius:var(--radius);padding:1.1rem">
           <div style="font-size:.82rem;font-weight:700;color:var(--success);margin-bottom:.4rem">&#128202; Consolidated Summary Report</div>
           <p style="color:var(--text2);font-size:.78rem;margin-bottom:.85rem;line-height:1.5">
-            Full analysis: Query Type &amp; Sub Query Type counts, open/closed split, consolidated summaries, and sub query breakdown — one row per Sub Query Type.
+            Full analysis: Query Type &amp; Sub Query Type counts, consolidated summaries, and sub query breakdown — one row per Sub Query Type.
           </p>
           <div class="btn-row">
-            <button class="btn btn-success" onclick="exportSummaryXLSX()">&#8659; Download Summary XLSX</button>
+            <button class="btn btn-success" onclick="exportSummaryXLSX()">&#8659; XLSX</button>
             <button class="btn btn-ghost" onclick="exportCSV()">&#8659; CSV</button>
+          </div>
+        </div>
+
+        <div style="background:var(--bg3);border:1px solid #2e1065;border-radius:var(--radius);padding:1.1rem">
+          <div style="font-size:.82rem;font-weight:700;color:#c4b5fd;margin-bottom:.4rem">&#128203; Campaign Standardized Report</div>
+          <p style="color:var(--text2);font-size:.78rem;margin-bottom:.85rem;line-height:1.5">
+            Sr. No., Campaign Name, Query Count, Average Query Volume/Percentage, Query Type, Sub Query Type, Standardized Query Statement.
+          </p>
+          <div class="btn-row">
+            <button class="btn" style="background:#7c3aed;color:#fff" onclick="exportCampaignReportXLSX()">&#8659; XLSX</button>
+            <button class="btn btn-ghost" onclick="exportCampaignReportCSV()">&#8659; CSV</button>
           </div>
         </div>
 
@@ -323,15 +351,15 @@ function classifyStatement(stmt) {
 
     if (norm > bestScore) {
       bestScore = norm;
-      best = { queryType: entry.queryType, subQueryType: entry.subQueryType, score: norm, matched: matched, total: entry._tokens.length };
+      best = { queryType: entry.queryType, subQueryType: entry.subQueryType, statement: entry.statement, score: norm, matched: matched, total: entry._tokens.length };
     }
   });
 
   if (!best || bestScore < 0.3) {
-    return { queryType:'Other', subQueryType:'False Query', confidence:'low', score:bestScore };
+    return { queryType:'Other', subQueryType:'False Query', confidence:'low', score:bestScore, statement:'' };
   }
   var confidence = bestScore >= 1.5 ? 'high' : bestScore >= 0.7 ? 'medium' : 'low';
-  return { queryType: best.queryType, subQueryType: best.subQueryType, confidence: confidence, score: Math.round(bestScore*10)/10 };
+  return { queryType: best.queryType, subQueryType: best.subQueryType, confidence: confidence, score: Math.round(bestScore*10)/10, statement: best.statement };
 }
 
 /* ═══════════════════════════════════════════════
@@ -362,9 +390,10 @@ var BAR_CLS   = ['c0','c1','c2','c3','c4','c5','c6','c7','c8','c9'];
    STATE
 ═══════════════════════════════════════════════ */
 var fileList  = [];
-var allRows   = [];  // enriched with __qt, __sq, __conf, __source
+var allRows   = [];  // enriched with __qt, __sq, __conf, __source, __std
 var analysis  = [];
 var subAnalysis = [];
+var campaignReport = [];
 var fileIdSeq = 0;
 
 /* ═══════════════════════════════════════════════
@@ -489,6 +518,7 @@ function mergeAndAnalyze() {
       copy['__sq']     = classified.subQueryType;
       copy['__conf']   = classified.confidence;
       copy['__score']  = classified.score;
+      copy['__std']    = classified.statement || stmt;  // standardized taxonomy statement
       copy['__auto']   = !existingQt;  // true = auto-classified
       copy['__source'] = f.name;
       allRows.push(copy);
@@ -531,13 +561,14 @@ function runAnalysis() {
     var src = r['__source']||'';
     if (src && groups[qt].sources.indexOf(src)===-1) groups[qt].sources.push(src);
     // Sub group
-    if (!groups[qt].subGroups[sq]) groups[qt].subGroups[sq]={count:0,open:0,closed:0,confs:[],stmts:[]};
+    if (!groups[qt].subGroups[sq]) groups[qt].subGroups[sq]={count:0,open:0,closed:0,confs:[],stmts:[],stds:[]};
     groups[qt].subGroups[sq].count++;
     if (st==='open') groups[qt].subGroups[sq].open++;
     else if (st==='closed'||st==='resolved') groups[qt].subGroups[sq].closed++;
     groups[qt].subGroups[sq].confs.push(r['__conf']||'low');
     var sqStmt = getCol(r,'Query Statement');
     if (sqStmt) groups[qt].subGroups[sq].stmts.push(sqStmt);
+    if (r['__std']) groups[qt].subGroups[sq].stds.push(r['__std']);
   });
 
   var total = allRows.length;
@@ -550,8 +581,8 @@ function runAnalysis() {
       var pct = ((d.count/total)*100).toFixed(1);
       var subs = Object.keys(d.subGroups).sort(function(a,b){return d.subGroups[b].count-d.subGroups[a].count;});
       return {qt:qt, count:d.count, pct:pct, open:d.open, closed:d.closed, avgAge:avgAge,
-              campaigns:d.campaigns.join(', ')||'-', sources:d.sources, stmts:uniq,
-              summary:makeSummary(qt,uniq,d.count,d.open,d.subGroups,subs),
+              campaigns:d.campaigns.join(', ')||'-', sources:d.sources, stmts:uniq, allStmts:d.stmts,
+              summary:makeSummary(qt,d.stmts,d.count,d.open,d.subGroups,subs),
               subGroups:d.subGroups, subs:subs};
     });
 
@@ -563,8 +594,33 @@ function runAnalysis() {
       var highConf = sg.confs.filter(function(c){return c==='high';}).length;
       var avgConf = highConf/sg.confs.length > 0.6 ? 'high' : highConf/sg.confs.length > 0.3 ? 'medium' : 'low';
       var pctOfType = ((sg.count/a.count)*100).toFixed(1);
-      subAnalysis.push({qt:a.qt, sq:sq, count:sg.count, pctOfType:pctOfType, open:sg.open, closed:sg.closed, avgConf:avgConf, qtIdx:i, stmts:sg.stmts||[]});
+      subAnalysis.push({qt:a.qt, sq:sq, count:sg.count, pctOfType:pctOfType, open:sg.open, closed:sg.closed, avgConf:avgConf, qtIdx:i, stmts:sg.stmts||[], stds:sg.stds||[]});
     });
+  });
+
+  /* ── Campaign Report: Campaign Name × Query Type × Sub Query Type ── */
+  var campaignGroups = {};
+  allRows.forEach(function(r) {
+    var camp = getCol(r,'Campaign Name') || 'Unspecified';
+    var qt = r['__qt'] || 'Unclassified';
+    var sq = r['__sq'] || 'Unknown';
+    var key = camp + '|||' + qt + '|||' + sq;
+    if (!campaignGroups[key]) campaignGroups[key] = { campaign:camp, qt:qt, sq:sq, count:0, stdStmts:{} };
+    campaignGroups[key].count++;
+    var std = r['__std'] || '';
+    if (std) campaignGroups[key].stdStmts[std] = (campaignGroups[key].stdStmts[std]||0) + 1;
+  });
+  campaignReport = Object.keys(campaignGroups).map(function(key) {
+    var g = campaignGroups[key];
+    var bestStd = '', bestCount = 0;
+    Object.keys(g.stdStmts).forEach(function(s) {
+      if (g.stdStmts[s] > bestCount) { bestCount = g.stdStmts[s]; bestStd = s; }
+    });
+    var pct = total ? ((g.count/total)*100).toFixed(1) : '0.0';
+    return { campaign:g.campaign, qt:g.qt, sq:g.sq, count:g.count, pct:pct, stdStmt: bestStd || '—' };
+  }).sort(function(a,b) {
+    if (a.campaign !== b.campaign) return a.campaign.localeCompare(b.campaign);
+    return b.count - a.count;
   });
 
   var totalOpen   = analysis.reduce(function(a,b){return a+b.open;},0);
@@ -651,7 +707,7 @@ function runAnalysis() {
   document.getElementById('subqueryBody').innerHTML = subAnalysis.map(function(r,i) {
     var confClass = r.avgConf==='high'?'match-high':r.avgConf==='medium'?'match-med':'match-low';
     var confLabel = r.avgConf==='high'?'&#9679; High':r.avgConf==='medium'?'&#9679; Medium':'&#9679; Low';
-    var vocText = makeSubSummary(r.sq, r.stmts||[], r.count, r.open);
+    var vocText = makeSubSummary(r.sq, r.stmts||[], r.count, r.open, r.stds||[]);
     return '<tr>' +
       '<td style="color:var(--text3)">'+(i+1)+'</td>' +
       '<td><span class="badge '+BADGE_CLS[r.qtIdx%10]+'">'+esc(r.qt)+'</span></td>' +
@@ -660,6 +716,19 @@ function runAnalysis() {
       '<td style="text-align:center">'+r.pctOfType+'%</td>' +
       '<td><span class="chip-match '+confClass+'">'+confLabel+'</span></td>' +
       '<td style="font-size:.78rem;color:#cbd5e1;line-height:1.6;max-width:320px">'+esc(vocText)+'</td>' +
+      '</tr>';
+  }).join('');
+
+  /* ── Campaign Report table ── */
+  document.getElementById('campaignReportBody').innerHTML = campaignReport.map(function(r,i) {
+    return '<tr>' +
+      '<td style="color:var(--text3)">'+(i+1)+'</td>' +
+      '<td style="font-size:.8rem;color:var(--text2)">'+esc(r.campaign)+'</td>' +
+      '<td style="font-weight:800;color:var(--accent);text-align:center">'+r.count+'</td>' +
+      '<td style="text-align:center;color:var(--accent2);font-weight:700">'+r.pct+'%</td>' +
+      '<td><span class="badge '+BADGE_CLS[Math.abs(hashStr(r.qt))%10]+'">'+esc(r.qt)+'</span></td>' +
+      '<td style="font-size:.78rem;color:var(--accent2)"><span class="chip-sq">'+esc(r.sq)+'</span></td>' +
+      '<td style="font-size:.78rem;color:#cbd5e1;line-height:1.6;max-width:340px">'+esc(r.stdStmt)+'</td>' +
       '</tr>';
   }).join('');
 
@@ -683,7 +752,7 @@ function runAnalysis() {
       var conf = hi/sg.confs.length>0.6?'match-high':hi/sg.confs.length>0.3?'match-med':'match-low';
       var confLabel = hi/sg.confs.length>0.6?'High':hi/sg.confs.length>0.3?'Medium':'Low';
       var sqPct = r.count > 0 ? ((sg.count/r.count)*100).toFixed(0) : 0;
-      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
+      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open, sg.stds||[]);
       return '<div style="padding:.6rem 0;border-bottom:1px solid #1a2540">' +
         '<div style="display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.35rem">' +
           '<span class="chip-sq">'+esc(sq)+'</span>' +
@@ -704,7 +773,7 @@ function runAnalysis() {
         '<span style="color:var(--text3);font-size:.78rem">'+r.pct+'%</span>' +
         '<span style="margin-left:auto;font-size:.76rem;color:var(--text3)">Open: <span style="color:var(--warn)">'+r.open+'</span> &bull; Closed: <span style="color:var(--success)">'+r.closed+'</span> &bull; Avg Age: '+r.avgAge+'</span>' +
       '</div>' +
-      '<div class="summary-text"><strong style="color:var(--accent)">&#128172; Voice of Customer:</strong> '+esc(r.summary)+'</div>' +
+      '<div class="summary-text"><strong style="color:var(--accent)">Consolidated Summary:</strong> '+esc(r.summary)+'</div>' +
       '<div style="font-size:.75rem;color:var(--text3);margin:.5rem 0 .3rem;font-weight:600">Sub Query Types:</div>' +
       subRows +
       '</div>';
@@ -735,160 +804,113 @@ function runAnalysis() {
 }
 
 /* ═══════════════════════════════════════════════
-   VOICE OF CUSTOMER SUMMARY BUILDER
-   Generates a narrative that describes exactly what
-   customers are saying most frequently.
+   CONSOLIDATED SUMMARY BUILDER
+   Describes the general issue behind each Query Type /
+   Sub Query Type using the clean, standardized taxonomy
+   statement — not noisy raw customer phrasing.
 ═══════════════════════════════════════════════ */
 
-/* Returns top N actual customer statements by frequency */
-function topActualStatements(stmts, n) {
-  // Count exact statement occurrences
+/* Count words in a plain text string */
+function countWords(s) {
+  var m = String(s || '').trim().match(/\S+/g);
+  return m ? m.length : 0;
+}
+
+/* Join an array of names into natural flowing English: "A, B, and C" */
+function formatNameList(arr) {
+  if (arr.length === 0) return '';
+  if (arr.length === 1) return arr[0];
+  if (arr.length === 2) return arr[0] + ' and ' + arr[1];
+  return arr.slice(0, -1).join(', ') + ', and ' + arr[arr.length - 1];
+}
+
+/* Lowercase the first letter and strip trailing punctuation, for mid-sentence use */
+function lowerFirst(s) {
+  s = String(s || '').trim().replace(/[.!?]+$/, '');
+  return s ? s.charAt(0).toLowerCase() + s.slice(1) : '';
+}
+
+/* Returns the most frequently matched standardized (taxonomy) statement
+   for a group — a clean description of the general issue, not raw
+   customer text with greetings/filler words. */
+function dominantGeneralIssue(stds) {
+  if (!stds || !stds.length) return null;
   var freq = {};
-  stmts.forEach(function(s) {
-    var key = s.trim().toLowerCase();
-    freq[key] = (freq[key] || 0) + 1;
-  });
-  // Sort by frequency, return original casing of first occurrence
-  var seen = {};
-  var ranked = [];
-  stmts.forEach(function(s) {
-    var key = s.trim().toLowerCase();
-    if (!seen[key]) {
-      seen[key] = true;
-      ranked.push({ stmt: s.trim(), count: freq[key] });
-    }
-  });
-  ranked.sort(function(a, b) { return b.count - a.count; });
-  return ranked.slice(0, n);
+  stds.forEach(function(s) { freq[s] = (freq[s] || 0) + 1; });
+  var best = Object.keys(freq).sort(function(a, b) { return freq[b] - freq[a]; })[0];
+  return best || null;
 }
 
-/* Build a short VoC sentence from a statement */
-function vocSentence(stmt, count, total) {
-  var s = stmt.charAt(0).toUpperCase() + stmt.slice(1).replace(/[.!?]+$/, '');
-  var pct = total > 0 ? Math.round(count / total * 100) : 0;
-  var freqNote = count > 1 ? ' (raised '+count+' times, '+pct+'%)' : '';
-  return s + freqNote;
+/* ── buildConsolidatedSummary: describes the general issue for each
+   sub query type using the clean taxonomy statement, blended into a
+   single flowing paragraph — no percentages, no raw noisy quotes. ── */
+function buildConsolidatedSummary(qt, count, subGroups, subs, maxWords) {
+  maxWords = maxWords || 100;
+
+  if (!subs || subs.length === 0) {
+    return 'This category recorded ' + count + ' ticket(s) under "' + qt + '".';
+  }
+
+  // Build a clean clause per sub query type describing its general issue
+  var clauses = subs.map(function(sq) {
+    var sg = subGroups[sq];
+    var issue = dominantGeneralIssue(sg.stds);
+    return issue ? lowerFirst(issue) : lowerFirst(sq);
+  });
+
+  var connectorFirst  = 'Most tickets involve ';
+  var connectorSecond = 'Other tickets relate to ';
+  var connectorMore   = 'Additional concerns include ';
+
+  var draft = 'This category recorded ' + count + ' ticket(s) under "' + qt + '". ' +
+    connectorFirst + clauses[0] + '.';
+
+  var includedCount = 1;
+  for (var i = 1; i < clauses.length; i++) {
+    var connector = i === 1 ? connectorSecond : connectorMore;
+    var sentence = ' ' + connector + clauses[i] + '.';
+    var candidate = draft + sentence;
+    if (countWords(candidate) > maxWords) break;
+    draft = candidate;
+    includedCount++;
+  }
+
+  var remaining = clauses.length - includedCount;
+  if (remaining > 0) {
+    var note = ' ' + remaining + ' other issue type(s) were also reported in smaller numbers.';
+    if (countWords(draft + note) <= maxWords + 15) draft += note;
+  }
+
+  return draft;
 }
 
-/* ── makeSummary: pure Voice of Customer — what customers say most ── */
+/* ── makeSummary: Consolidated Summary describing the general issue
+   for the whole Query Type group. ── */
 function makeSummary(qt, stmts, count, open, subGroups, subs) {
   if (!stmts.length) {
     return 'No query statements recorded for ' + count + ' ticket(s) under "' + qt + '".';
   }
-
-  var dominantSQ = subs && subs.length > 0 ? subs[0] : null;
-  var dominantSG = dominantSQ && subGroups ? subGroups[dominantSQ] : null;
-
-  // Use dominant sub group stmts for most relevant voice, fallback to all stmts
-  var srcStmts = (dominantSG && dominantSG.stmts && dominantSG.stmts.length)
-    ? dominantSG.stmts : stmts;
-  var topStmts = topActualStatements(srcStmts, 2);
-  var voc = '';
-
-  // Lead: dominant sub category context
-  if (dominantSQ && dominantSG) {
-    var sqPct = Math.round(dominantSG.count / count * 100);
-    voc += sqPct + '% of ' + count + ' customers are primarily facing issues with "' + dominantSQ + '". ';
-  }
-
-  // Primary customer voice from actual statement
-  if (topStmts.length > 0) {
-    var t1 = topStmts[0];
-    var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
-    voc += 'Customers are reporting that ' + s1 + '. ';
-  }
-
-  // Second sub group voice
-  if (subs && subs.length > 1) {
-    var secondSQ = subs[1];
-    var secondSG = subGroups ? subGroups[secondSQ] : null;
-    if (secondSG && secondSG.stmts && secondSG.stmts.length) {
-      var t2 = topActualStatements(secondSG.stmts, 1)[0];
-      var pct2 = Math.round(secondSG.count / count * 100);
-      var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
-      voc += pct2 + '% also report that ' + s2 + '. ';
-    }
-  } else if (topStmts.length > 1) {
-    var t2b = topStmts[1];
-    var s2b = t2b.stmt.charAt(0).toLowerCase() + t2b.stmt.slice(1).replace(/[.!?]+$/, '');
-    voc += 'Some also mention that ' + s2b + '. ';
-  }
-
-  return voc.trim();
+  return buildConsolidatedSummary(qt, count, subGroups, subs, 100);
 }
 
-/* ── makeSubSummary: descriptive paragraph for sub query type ── */
-function makeSubSummary(sq, stmts, count, open) {
-  if (!stmts || !stmts.length) {
-    return count + ' ticket(s) raised under "' + sq + '". Customers are experiencing issues related to ' + sq.toLowerCase() + '.';
+/* ── makeSubSummary: describes the general issue for one sub query type,
+   using the clean standardized taxonomy statement. ── */
+function makeSubSummary(sq, stmts, count, open, stds) {
+  var draft = count + ' ticket(s) were raised under "' + sq + '".';
+  var issue = dominantGeneralIssue(stds);
+  if (issue) {
+    draft += ' The general issue is that ' + lowerFirst(issue) + '.';
   }
-  var top = topActualStatements(stmts, 2);
-  var t1 = top[0];
-  var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
-  var voc = 'Customers are reporting that ' + s1 + '.';
-  if (top.length > 1) {
-    var t2 = top[1];
-    var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
-    voc += ' Some also report that ' + s2 + '.';
-  }
-  return voc;
+  return draft;
 }
 
-/* ── vocSummaryCell: descriptive consolidated paragraph for the summary table ── */
+/* ── vocSummaryCell: displays the Consolidated Summary in the table ── */
 function vocSummaryCell(r) {
   if (!r.stmts || !r.stmts.length) {
     return '<span style="color:var(--text3);font-size:.75rem">No statements recorded</span>';
   }
-
-  // Use taxonomy sub query grouping to describe what customers say
-  // Build a short paragraph from the dominant sub query type + top statements
-  var dominantSQ = r.subs && r.subs.length > 0 ? r.subs[0] : null;
-  var dominantSG = dominantSQ ? r.subGroups[dominantSQ] : null;
-
-  // Get top statements from dominant sub group first, then overall
-  var srcStmts = (dominantSG && dominantSG.stmts && dominantSG.stmts.length)
-    ? dominantSG.stmts
-    : r.stmts;
-
-  var topStmts = topActualStatements(srcStmts, 2);
-  var topAll   = topActualStatements(r.stmts, 3);
-
-  // Build narrative paragraph
-  var para = '';
-
-  // Lead sentence: describe what the majority is facing
-  if (dominantSQ && dominantSG) {
-    var sqPct = Math.round(dominantSG.count / r.count * 100);
-    para += sqPct + '% of customers are facing issues with <strong style="color:var(--accent2)">' + esc(dominantSQ) + '</strong>. ';
-  }
-
-  // Add the most common actual statement as the primary customer voice
-  if (topStmts.length > 0) {
-    var t1 = topStmts[0];
-    var s1 = t1.stmt.charAt(0).toUpperCase() + t1.stmt.slice(1).replace(/[.!?]+$/, '');
-    para += 'Primarily, customers are reporting that <em style="color:#cbd5e1">' + esc(s1) + '</em>. ';
-  }
-
-  // Add second issue if present in the overall list and different sub group
-  if (r.subs && r.subs.length > 1) {
-    var secondSQ = r.subs[1];
-    var secondSG = r.subGroups[secondSQ];
-    if (secondSG && secondSG.stmts && secondSG.stmts.length) {
-      var t2 = topActualStatements(secondSG.stmts, 1)[0];
-      var s2 = t2.stmt.charAt(0).toLowerCase() + t2.stmt.slice(1).replace(/[.!?]+$/, '');
-      var sqPct2 = Math.round(secondSG.count / r.count * 100);
-      para += sqPct2 + '% also report that <em style="color:#cbd5e1">' + esc(s2) + '</em>. ';
-    }
-  } else if (topAll.length > 1 && topAll[1].stmt !== (topStmts[0] ? topStmts[0].stmt : '')) {
-    var t2b = topAll[1];
-    var s2b = t2b.stmt.charAt(0).toLowerCase() + t2b.stmt.slice(1).replace(/[.!?]+$/, '');
-    para += 'Some also report that <em style="color:#cbd5e1">' + esc(s2b) + '</em>. ';
-  }
-
-  // Close with total count context
-  para += 'Total <strong style="color:var(--accent)">' + r.count + '</strong> ticket(s) under this category.';
-
-  return '<div style="font-size:.78rem;line-height:1.7;color:#94a3b8">' + para + '</div>';
+  var text = buildConsolidatedSummary(r.qt, r.count, r.subGroups, r.subs, 100);
+  return '<div style="font-size:.78rem;line-height:1.7;color:#94a3b8">' + esc(text) + '</div>';
 }
 
 /* ═══════════════════════════════════════════════
@@ -897,7 +919,7 @@ function vocSummaryCell(r) {
 function showTab(name, el) {
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   el.classList.add('active');
-  ['summary','subquery','chart','detail','rawdata'].forEach(function(t){
+  ['summary','subquery','campaignreport','chart','detail','rawdata'].forEach(function(t){
     document.getElementById('tab-'+t).style.display=(t===name)?'block':'none';
   });
 }
@@ -997,21 +1019,20 @@ function exportSummaryXLSX() {
   if (!analysis.length) return;
   var wb = XLSX.utils.book_new();
 
-  // Sheet 1: Summary — one row per sub query type
-  var s1 = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Source Files', 'Voice of Customer Summary']];
+  // Sheet 1: Summary — one row per sub query type, Consolidated Summary shown once per Query Type
+  var s1 = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Source Files', 'Consolidated Summary']];
   var rowNum = 0;
   analysis.forEach(function(r) {
     r.subs.forEach(function(sq, si) {
       rowNum++;
       var sg = r.subGroups[sq];
-      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
       s1.push([
         rowNum, r.campaigns, r.qt,
         si === 0 ? r.count : '',
         si === 0 ? r.pct + '%' : '',
         sq, sg.count,
         si === 0 ? r.sources.join(', ') : '',
-        subVoC
+        si === 0 ? r.summary : ''
       ]);
     });
     if (r.subs.length === 0) {
@@ -1023,10 +1044,10 @@ function exportSummaryXLSX() {
   ws1['!cols'] = [{wch:4},{wch:20},{wch:22},{wch:12},{wch:9},{wch:35},{wch:10},{wch:30},{wch:100}];
   XLSX.utils.book_append_sheet(wb, ws1, 'Query Summary');
 
-  // Sheet 2: Sub Query Breakdown (flat)
-  var s2 = [['#', 'Query Type', 'Sub Query Type', 'Count', '% of Type', 'Open', 'Closed', 'Confidence']];
+  // Sheet 2: Sub Query Breakdown (flat) — per-sub-type detail, distinct from the combined Query Type summary in Sheet 1
+  var s2 = [['#', 'Query Type', 'Sub Query Type', 'Count', '% of Type', 'Confidence', 'Sub Query Detail']];
   subAnalysis.forEach(function(r, i) {
-    s2.push([i + 1, r.qt, r.sq, r.count, r.pctOfType + '%', r.avgConf, makeSubSummary(r.sq, r.stmts||[], r.count, r.open)]);
+    s2.push([i + 1, r.qt, r.sq, r.count, r.pctOfType + '%', r.avgConf, makeSubSummary(r.sq, r.stmts||[], r.count, r.open, r.stds||[])]);
   });
   var ws2 = XLSX.utils.aoa_to_sheet(s2);
   ws2['!cols'] = [{wch:4},{wch:22},{wch:35},{wch:8},{wch:10},{wch:14},{wch:100}];
@@ -1037,15 +1058,14 @@ function exportSummaryXLSX() {
 
 function exportCSV() {
   if (!analysis.length) return;
-  // One row per sub query type
-  var data = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Voice of Customer Summary']];
+  // One row per sub query type, Consolidated Summary shown once per Query Type
+  var data = [['#', 'Campaign', 'Query Type', 'Total Count', '% Share', 'Sub Query Type', 'Sub Count', 'Consolidated Summary']];
   var rowNum = 0;
   analysis.forEach(function(r) {
     r.subs.forEach(function(sq, si) {
       rowNum++;
       var sg = r.subGroups[sq];
-      var subVoC = makeSubSummary(sq, sg.stmts||[], sg.count, sg.open);
-      data.push([rowNum, r.campaigns, r.qt, si === 0 ? r.count : '', si === 0 ? r.pct + '%' : '', sq, sg.count, subVoC]);
+      data.push([rowNum, r.campaigns, r.qt, si === 0 ? r.count : '', si === 0 ? r.pct + '%' : '', sq, sg.count, si === 0 ? r.summary : '']);
     });
     if (r.subs.length === 0) {
       rowNum++;
@@ -1058,8 +1078,42 @@ function exportCSV() {
   triggerDL(new Blob([csv], { type: 'text/csv' }), 'consolidated_summary_report.csv');
 }
 
+/* ═══════════════════════════════════════════════
+   EXPORT C — Campaign Standardized Report
+   Sr. No. | Campaign Name | Query Count | Average Query Volume/Percentage |
+   Query Type | Sub Query Type | Standardized Query Statement
+═══════════════════════════════════════════════ */
+function buildCampaignReportRows() {
+  var cols = ['Sr. No.', 'Campaign Name', 'Query Count', 'Average Query Volume/Percentage', 'Query Type', 'Sub Query Type', 'Standardized Query Statement'];
+  var rows = [cols];
+  campaignReport.forEach(function(r, i) {
+    rows.push([i + 1, r.campaign, r.count, r.pct + '%', r.qt, r.sq, r.stdStmt]);
+  });
+  return { cols: cols, rows: rows };
+}
+
+function exportCampaignReportXLSX() {
+  if (!campaignReport.length) return;
+  var built = buildCampaignReportRows();
+  var wb = XLSX.utils.book_new();
+  var ws = XLSX.utils.aoa_to_sheet(built.rows);
+  ws['!cols'] = [{wch:8},{wch:22},{wch:12},{wch:30},{wch:22},{wch:35},{wch:90}];
+  XLSX.utils.book_append_sheet(wb, ws, 'Campaign Report');
+  XLSX.writeFile(wb, 'campaign_standardized_report.xlsx');
+}
+
+function exportCampaignReportCSV() {
+  if (!campaignReport.length) return;
+  var built = buildCampaignReportRows();
+  var csv = built.rows.map(function(row) {
+    return row.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(',');
+  }).join('\n');
+  triggerDL(new Blob([csv], { type: 'text/csv' }), 'campaign_standardized_report.csv');
+}
+
 function triggerDL(blob,name){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href);}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function hashStr(s){var h=0;s=String(s||'');for(var i=0;i<s.length;i++){h=((h<<5)-h+s.charCodeAt(i))|0;}return h;}
 </script>
 </body>
 </html>
